@@ -30,9 +30,8 @@ body {
   line-height: 1.5;
   color: var(--text-main);
   background:
-    radial-gradient(circle at 10% 10%, rgba(77, 163, 255, 0.12), transparent 35%),
-    radial-gradient(circle at 90% 80%, rgba(110, 193, 255, 0.1), transparent 30%),
-    var(--bg-main);
+    linear-gradient(rgba(7, 19, 37, 0.7), rgba(7, 19, 37, 0.85)),
+    url("../Images/wallpaper_welcomepage.png") center top / auto no-repeat fixed;
 }
 
 a {
@@ -207,7 +206,7 @@ button:disabled,
 }
 
 .connexion-form {
-  margin-top: 200px;
+  margin-top: 270px;
   display: flex;
   justify-content: center;
 }
