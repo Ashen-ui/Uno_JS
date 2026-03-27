@@ -1,0 +1,711 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Projet Uno Web</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32d9bd9c-d556-806d-b6ab-c9b1d96ce75c" class="page sans"><header><h1 class="page-title" dir="auto">Projet Uno Web</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="ltr"><nav id="32d9bd9c-d556-80c9-a8ab-ea0958385551" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d9bd9c-d556-80e2-af13-de1af00e3ead"><mark class="highlight-blue">Instructions</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d9bd9c-d556-80ad-b52b-fc9e28eb6177"><mark class="highlight-blue">Règles</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32d9bd9c-d556-8095-b4b6-d4c6b8fa86fb"><mark class="highlight-blue">Cartes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32d9bd9c-d556-8051-a650-e1ac6102410a"><mark class="highlight-blue">Cartes Spéciales</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32d9bd9c-d556-8012-ab28-e537890e38e4"><mark class="highlight-blue">But du jeu</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32d9bd9c-d556-8027-84c8-d347196b1dc7"><mark class="highlight-blue">Déroulement de la partie</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32d9bd9c-d556-80c8-ac3d-ddf0ac39ffb5"><mark class="highlight-blue">Calcul des points</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d9bd9c-d556-8037-95d1-e07fa20fdf4b"><mark class="highlight-blue">Notions</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d9bd9c-d556-8008-b9b3-c251ccf266ed"><mark class="highlight-blue">Rendu</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d9bd9c-d556-8075-a96d-dafe2c4adb68"><mark class="highlight-blue"><mark class="highlight-default_background">Grille d’évaluation</mark></mark></a></div></nav></div><div style="display:contents" dir="auto"><h2 id="32d9bd9c-d556-80e2-af13-de1af00e3ead" class=""><mark class="highlight-blue">Instructions</mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-802e-943c-c0de7250ef07"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/exclamation-mark_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8029-be5b-ca6f491e43e4" class="">Pour ce projet, vous allez devoir réaliser le jeu du <strong>UNO Web </strong>en <strong>JS, sans framework.</strong></p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-807a-8188-d7950abd514a" class="">Ce projet sera à réaliser en groupe de <strong>3 à 4 personnes</strong>, sur une durée d’un mois environ, la <strong>soutenance </strong>finale se déroulant le <strong>28 Avril</strong>. </p></div><div style="display:contents" dir="auto"><blockquote id="32d9bd9c-d556-80e4-91e1-ccd31e33fc23" class="">Votre application Web se présentera comme ci-dessous :<div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80c4-b317-c3ce70cd7a40" class="bulleted-list"><li style="list-style-type:disc">Une page d’accueil</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-8024-9425-c02ea113649e" class="bulleted-list"><li style="list-style-type:disc">Une page de connexion / inscription</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80fb-a100-c0407a562097" class="bulleted-list"><li style="list-style-type:disc">Une page avec les différents lobby ( une fois connecté )</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-8066-9dfe-c23ebc81e93b" class="bulleted-list"><li style="list-style-type:disc">Une page de jeu ( également connecté )</li></ul></div></blockquote></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80b3-b501-de7976149bd4" class="">Pour le design, vous êtes complètement libre, mais attention, l’interface doit être claire, comme dit dans le barème. Je vous mets à disposition des images d’un jeu de carte de Uno que j’ai réalisé.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure id="32d9bd9c-d556-803b-8ec9-d55c8cbe021b"><div class="source"><a href="UNO_cartes.zip">UNO_cartes.zip</a></div></figure></div><div style="display:contents" dir="auto"><h2 id="32d9bd9c-d556-80ad-b52b-fc9e28eb6177" class=""><mark class="highlight-blue">Règles</mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-8016-8951-cda519981f06"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/cards_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="32d9bd9c-d556-8095-b4b6-d4c6b8fa86fb" class=""><mark class="highlight-blue">Cartes</mark></h3></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80ac-861a-d6ba9920a7d8" class="">Comme vous le savez tous, je l’espère, le jeu de Uno se compose de 108 cartes, réparties en 4 familles de couleurs, le bleu, le rouge, le vert et le jaune. Et il existe également des cartes spéciales, comme les +2, +4,…</p></div><div style="display:contents" dir="ltr"><table id="32d9bd9c-d556-80fa-999d-e95dd8596a43" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80a5-ba28-cd4c5238b538"><td id="DH}d" class="" style="width:188.98672485351562px">Type de carte</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">Nombre par couleur</td><td id="a[L|" class="" style="width:151px">Couleurs</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8093-aff3-eb1f0df70127"><td id="DH}d" class="" style="width:188.98672485351562px">Cartes numérotées ( 0 à 9 )</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">19 ( Le zéro y est une seule fois )</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80ca-bd1e-d5cf071c0e26"><td id="DH}d" class="" style="width:188.98672485351562px">Cartes +2</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">2</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80b1-abb1-ebb7df172ce5"><td id="DH}d" class="" style="width:188.98672485351562px">Cartes Inversion</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">2</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80c2-8074-c96b16a4395b"><td id="DH}d" class="" style="width:188.98672485351562px">Cartes Passer</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">2</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8039-aacc-f3c799707b69"><td id="DH}d" class="" style="width:188.98672485351562px">Joker ( Choisir la couleur )</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">1</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-807b-bf40-c031b58228a3"><td id="DH}d" class="" style="width:188.98672485351562px">Cartes +4</td><td id="Fh&lt;L" class="" style="width:154.98863220214844px">1</td><td id="a[L|" class="" style="width:151px">Bleu, Vert, Rouge, Jaune</td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-803a-be26-f06079a546e6"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/card-spade_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="32d9bd9c-d556-8051-a650-e1ac6102410a" class=""><mark class="highlight-blue">Cartes Spéciales</mark></h3></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8064-88f3-cfcf094ea953" class="">Comme je l’ai dit plus tôt, il existe plusieurs cartes spéciales, qui permettent de faire différente chose.</p></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-804c-9566-f82abb32e7fd" class="bulleted-list"><li style="list-style-type:disc">Carte +2 : présente un double avantage. Elle contraint le joueur suivant à prendre 2 cartes et à passer son tour. À noter qu&#x27;il est possible de contourner l&#x27;action de cette carte en posant un « +2 », de même coloris ou non, ce qui obligera la personne suivante à piocher plus de cartes (4 au total) et à passer son tour.</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80ca-8836-f7d562fece5b" class="bulleted-list"><li style="list-style-type:disc">Carte Joker : permet à la personne qui la pose de choisir une nouvelle couleur (rouge, vert, jaune ou bleu). Pour ce faire, le joueur doit annoncer son choix en posant la carte. Il peut également continuer avec la couleur actuelle. Si la carte « Joker » est jouée en début de partie, le choix de la couleur de départ appartient au donneur. Remarque : il peut être avantageux de conserver une ou deux cartes « Joker » le plus longtemps possible. Cependant, si un participant en accumule trop et qu’il lui en reste à la fin de la manche, sa main pourrait valoir beaucoup de points. Cette carte spéciale vaut 50 points.</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80e8-b082-f73c21f12b65" class="bulleted-list"><li style="list-style-type:disc">Carte +4 : est illustrée d’une carte de chaque couleur sur un fond noir. Très pratique, elle permet à celui qui la pose de choisir quelle sera la couleur que devra poser le participant suivant. Ce dernier se voit également contraint de piocher 4 cartes et de passer son tour. Bon à savoir : si elle est tirée en guise de talon, le donneur la replacera au hasard dans la pioche.</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80f3-af83-efbc44f3f92b" class="bulleted-list"><li style="list-style-type:disc">Carte Inversion : est représentée par deux flèches orientées dans des sens opposés. Elle permet comme son nom l&#x27;indique, d&#x27;inverser le sens de la partie. Autrement dit, si le jeu se déroulait jusque-là dans le sens inverse des aiguilles d&#x27;une montre, après avoir posé cette carte, il se poursuivra dans le sens des aiguilles d&#x27;une montre et vice-versa. Une telle carte ne peut être jouée que sur une carte de la même couleur ou sur une autre carte « Inversion de sens ».</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-8092-8992-f72ae69a04c3" class="bulleted-list"><li style="list-style-type:disc">Carte Passer : oblige le joueur suivant à ne pas jouer. Si elle est retournée en début de jeu, le premier à jouer sera alors la deuxième personne située à gauche du donneur.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-809d-9232-fb1f7d546d8b"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bullseye_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="32d9bd9c-d556-8012-ab28-e537890e38e4" class=""><mark class="highlight-blue">But du jeu</mark></h3></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8045-ae12-d3b704fd3e24" class="">À l’instar du 8 américain, l&#x27;objectif du Uno est simple. Il s&#x27;agit d&#x27;être le premier joueur de la table à ne plus avoir de cartes en main. À la fin d&#x27;une manche, le vainqueur établit les scores en additionnant tous les points des mains des autres joueurs.</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-806c-affd-e72530d244b3" class="">En règle générale, la partie se termine lorsqu’un joueur atteint 500 points. Il existe cependant une variante qui consiste à comptabiliser les points pour chacun des perdants. La personne ayant marqué le moins de points à la fin des différentes manches est alors déclarée vainqueur.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-808a-ae19-ec59c939abf4"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/clock-alternate_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="32d9bd9c-d556-8027-84c8-d347196b1dc7" class=""><mark class="highlight-blue">Déroulement de la partie</mark></h3></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8098-9ce0-d9258bab6f35" class="">À vos marques, prêts, jouez ! Au début de chaque manche, chaque personne tire une carte au hasard dans la pioche. Celle qui a le chiffre le plus élevé devient le donneur de la manche. Toute carte avec un symbole compte pour zéro.</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80c0-8bcd-eb2d65979377" class="">Le donneur bat les cartes et en distribue 7 aux autres joueurs. Les cartes restantes, placées faces cachées, forment la pioche. La dernière carte de celle-ci est retournée face visible au centre de la table. Elle constitue le talon et la base de la défausse.</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-806b-b358-d78b8b20c9f2" class=""><em><strong>Attention : les joueurs n’ont pas le droit de regarder le recto de leurs cartes (distributeur compris) avant que le donneur n’ait retourné la première carte. Toute personne qui enfreint cette règle se voit contrainte d&#x27;ajouter deux cartes supplémentaires à son jeu. Si elle récidive et regarde ces deux nouvelles cartes, la sanction se répète.</strong></em></p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-806a-87d6-e5e7c2fbefb7" class="">Le jeu démarre dans le sens des aiguilles d’une montre, en partant du premier joueur à gauche de celui qui a distribué. La carte supérieure du talon doit être recouverte par une carte ayant : le même numéro ou la même couleur.</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-807e-a17f-d23434de308a" class="">Par exemple, si la pile de défausse contient une carte rouge qui est un 3, le participant peut placer soit une carte rouge, soit une carte avec un 3 de n&#x27;importe quelle couleur ;</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80ee-960d-d57c2be944d5" class="">le même symbole que la défausse (s’il s’agit d’une carte spéciale).</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8086-b9fd-c58834ac9cda" class=""><em><strong>Remarque : si un joueur a une carte « Joker » ou « +4 », il peut la poser sur n&#x27;importe quelle carte.</strong></em></p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80e0-8db8-e602c26d072c" class="">Lorsqu’un participant ne peut pas jouer, il pioche. S&#x27;il peut jouer la carte qu&#x27;il vient de piocher, il le fait. S&#x27;il ne peut pas, il la garde dans son jeu et passe son tour. Il est également possible de ne pas jouer une carte jouable. Dans ce cas de figure, il convient de tirer une carte de la pioche. Si elle est jouable, le participant peut l&#x27;utiliser immédiatement.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-80d7-b1bd-fb3a5ad9876e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/mathematics_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><h3 id="32d9bd9c-d556-80c8-ac3d-ddf0ac39ffb5" class=""><mark class="highlight-blue">Calcul des points</mark></h3></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8007-ad31-c886e2c155a3" class="">Le score est établi en fonction des cartes restantes dans les mains des adversaires. À titre indicatif, les cartes spéciales « +4 » et « Joker » valent 50 points. Les cartes « Inversion de sens », « Passe ton tour » et « +2 » valent 20 points chacune. Enfin, les cartes numérotées valent ce qu&#x27;elles indiquent (une carte 5 vaut 5 points, une carte 9 vaut 9 points, etc.).</p></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8003-bca2-f4a1cbba4fb2" class=""><em><strong>Attention : lorsqu&#x27;un joueur n&#x27;a plus qu&#x27;une carte en main, il doit l&#x27;annoncer aux autres de manière distincte en criant « Uno ». Si cette formalité est oubliée ou omise et qu’un adversaire le remarque, il doit piocher deux nouvelles cartes en guise de pénalité. ( A vous d’adapter ça pour le projet ! )</strong></em></p></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="32d9bd9c-d556-8037-95d1-e07fa20fdf4b" class=""><mark class="highlight-blue">Notions</mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-80d2-8bfa-c77975278ff1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/mathematics_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8024-8e35-e9e7bce603bd" class="">Pour le projet, vous aurez besoin d’utiliser diverse librairies</p></div><div style="display:contents" dir="auto"><blockquote id="32d9bd9c-d556-8098-aa60-e4349cde8dc9" class="">Pour la partie serveur, il vous faudra :<div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80ed-8dbe-db6ad226c655" class="bulleted-list"><li style="list-style-type:disc">http : afin de créer votre serveur sur un certain port</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-801b-b36e-ebee29a8a607" class="bulleted-list"><li style="list-style-type:disc"><a href="http://socket.io">socket.io</a> : aussi pour le serveur, afin de gérer les requêtes entre le serveur et les clients (WebSocket)</li></ul></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-8051-88c4-cbce4fd8309a" class="">j’ai également utilisé express pour l’application</p></div></blockquote></div><div style="display:contents" dir="auto"><blockquote id="32d9bd9c-d556-8036-aa26-f8501fe7e2d7" class="">Pour la partie connexion, il vous faudra :<div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80d6-8cfb-ecc97be70cf9" class="bulleted-list"><li style="list-style-type:disc">sqlite3: afin de créer une db simple sous la forme d’un fichier .sqlite</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80e7-b686-c63048d6f5f4" class="bulleted-list"><li style="list-style-type:disc">bcrypt : pour chiffrer les mots de passe</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-8017-8c26-dbcbcb746418" class="bulleted-list"><li style="list-style-type:disc">jwt : afin de créer des tokens pour la connexion</li></ul></div></blockquote></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="32d9bd9c-d556-8008-b9b3-c251ccf266ed" class=""><mark class="highlight-blue">Rendu</mark></h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="32d9bd9c-d556-8087-93e5-fb527d42ac4f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/book-closed_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><blockquote id="32d9bd9c-d556-80c5-ae49-ed457ec7fb0c" class="">Pour ce projet, vous devez rendre les éléments suivants : <div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-80e9-803e-e84aad032522" class="bulleted-list"><li style="list-style-type:disc">Repo GitHub avec un readme complet ( Installation / lancement de votre solution, parcours utilisateur )</li></ul></div><div style="display:contents" dir="auto"><ul id="32d9bd9c-d556-802e-90ed-c5ab729454e7" class="bulleted-list"><li style="list-style-type:disc">Un diapo de présentation de votre projet</li></ul></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-80ad-a664-c51f39f18513" class="">Un oral de 5 minutes minimum devra être réalisé le 28 avril, pour montrer votre organisation au sein du groupe, ce que vous avez pu réaliser et comment.</p></div></blockquote></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="32d9bd9c-d556-8075-a96d-dafe2c4adb68" class=""><mark class="highlight-blue"><mark class="highlight-default_background">Grille d’évaluation</mark></mark></h2></div><div style="display:contents" dir="ltr"><table id="32d9bd9c-d556-8094-922e-e9c09c416c97" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8073-ba62-e7445bcad78d"><td id="rDaZ" class="" style="width:508.6552734375px">Compétences</td><td id="KgSb" class="" style="width:91.65530014038086px">Note</td><td id="Ql_I" class="" style="width:94.65907287597656px">Points</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80df-855c-db46e9d91b27"><td id="rDaZ" class="" style="width:508.6552734375px">Multijoueur, avec système de lobby</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">5</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8076-b46c-ff0ad52290ab"><td id="rDaZ" class="" style="width:508.6552734375px">Règles du jeu respectées</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">4</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80ac-a3b0-d7d70c5ab809"><td id="rDaZ" class="" style="width:508.6552734375px">Interface utilisateur claire, un nouvel utilisateur sait de suite où aller et quoi faire</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">5</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-806b-939f-f200e433e8c7"><td id="rDaZ" class="" style="width:508.6552734375px">Repo propre ( Branche, commit, pull request,… )</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">4</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8091-a9ae-c604601f24fe"><td id="rDaZ" class="" style="width:508.6552734375px">Readme</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">2</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-808a-9744-c8587fa3bd60"><td id="rDaZ" class="" style="width:508.6552734375px">Organisation ( Trello, Jira,… )</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">+1</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-80a1-a09c-c017e6391ed1"><td id="rDaZ" class="" style="width:508.6552734375px">Utilisation abusive de l’IA</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">10/20 max</td></tr></div><div style="display:contents" dir="ltr"><tr id="32d9bd9c-d556-8010-bd32-d3ff2d4c71c1"><td id="rDaZ" class="" style="width:508.6552734375px">Total</td><td id="KgSb" class="" style="width:91.65530014038086px"></td><td id="Ql_I" class="" style="width:94.65907287597656px">/20 (+1)</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32d9bd9c-d556-805e-bbf7-d5d414d2d6d4" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
