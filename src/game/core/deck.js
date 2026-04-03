@@ -1,6 +1,6 @@
-const { CARD_COLORS, NUMBER_CARDS, SPECIAL_CARDS, WILD_CARDS } = require("./type")
+const { CARD_COLORS, NUMBER_CARDS, SPECIAL_CARDS, WILD_CARDS } = require("./types")
 
-function deck(cards,bonusCards) {
+function Deck(cards,bonusCards) {
     this.cards = cards || []
     this.bonusCards = bonusCards || []
 
@@ -28,12 +28,19 @@ function deck(cards,bonusCards) {
 
     this.draw = function() {
         return this.cards.pop()
-    }
+    }   
 
     this.shuffle = function() {
         for (let i = this.cards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1))
-            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]]
+            let j = Math.floor(Math.random() * (i + 1))
+            let temp = this.cards[i]
+            this.cards[i] = this.cards[j]
+            this.cards[j] = temp
         }
     }
+
+    this.getDeck = function() {
+        return { cards: this.cards, bonusCards: this.bonusCards }
+    }
 }
+module.exports = Deck

@@ -1,3 +1,5 @@
+
+
 function Player(pseudo, id, hand) {
     this.pseudo = pseudo
     this.id = id
@@ -19,3 +21,4 @@ function Player(pseudo, id, hand) {
         return this.hand.map((card) => `${card.color} ${card.value}`)
     }
 }
+module.exports = Player

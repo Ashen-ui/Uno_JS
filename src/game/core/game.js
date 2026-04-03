@@ -1,3 +1,8 @@
+const { NUMBER_CARDS, SPECIAL_CARDS, WILD_CARDS, CARD_COLORS, DIRECTIONS, GAME_STATUS } = require('./types')
+const Deck = require('./deck')
+const Player = require('./player')
+const prompt = require("prompt-sync")();
+
 function Game(playerInfos, options) {
     this.players = []
     this.currentPlayerIndex = 0
@@ -8,6 +13,7 @@ function Game(playerInfos, options) {
     this.options = options || {}
     this.ncard = 7
     this.lastcard = null
+    this.Round = 0
 
     this.initGame = function() {
         // cree et melanger le deck
@@ -16,7 +22,7 @@ function Game(playerInfos, options) {
 
         // cree les joueurs
         playerInfos.forEach(info => {
-            const player = new Player(info.pseudo, info.id, this.deck)
+            const player = new Player(info.pseudo, info.id)
             this.players.push(player)
         })
 
@@ -37,7 +43,7 @@ function Game(playerInfos, options) {
     }
 
     this.reset = function() {
-        this.players.forEach(player => player.hand = [])
+        this.players = []
         this.deck = new Deck()
         this.discardPile = []
         this.currentPlayerIndex = 0
@@ -51,30 +57,51 @@ function Game(playerInfos, options) {
         return this.players[this.currentPlayerIndex]
     }
 
-    this.nextPlayer = function() {
-        const playerCount = this.players.length
-        this.currentPlayerIndex = (this.currentPlayerIndex + this.direction + playerCount) % playerCount
+    this.getNextPlayerIndex = function() {
+        let nextIndex = this.currentPlayerIndex + this.direction
+        if (nextIndex < 0) return this.players.length - 1
+        if (nextIndex >= this.players.length) return 0
+        return nextIndex
+    }
+    
+    this.getNextPlayer = function() {
+        return this.players[this.getNextPlayerIndex()]
     }
 
-        
+    this.nextPlayer = function() {
+        return this.currentPlayerIndex = this.getNextPlayerIndex()
+    }
+
     this.isPlayable = function(card) {
         return card.color === this.lastcard.color ||
             card.value === this.lastcard.value ||
-            WILD_CARDS.includes(card.value)
+            WILD_CARDS.includes(card.color) 
     }
 
-    
-    this.applyCardEffect = function(player, card, chosenColor = null, targetPlayerId = null) {
+    this.applyCardEffect = function(player, card) {
+
+        switch (card.color) {
+            case "wild":
+                card.color = this.chooseColor()
+                break
+        }
+        if (card.value == "7+" || card.value == "0+") {
+            target = this.chooseTargetPlayer(player.id)
+        }
+        if (card.value == "+2" || card.value == "+4") {
+            if (this.deck.cards.length == 0) {
+                this.reDeck()
+            }
+        }
+
         switch (card.value) {
             case "+2":
+                for (let i = 0; i < 2; i++) this.getNextPlayer().draw(this.deck)
                 this.nextPlayer()
-                this.getCurrentPlayer().draw(this.deck)
-                this.getCurrentPlayer().draw(this.deck)
                 break
             case "+4":
+                for (let i = 0; i < 4; i++) this.getNextPlayer().draw(this.deck)
                 this.nextPlayer()
-                for (let i = 0; i < 4; i++) this.getCurrentPlayer().draw(this.deck)
-                if (chosenColor) card.color = chosenColor
                 break
             case "skip":
                 this.nextPlayer()
@@ -82,45 +109,101 @@ function Game(playerInfos, options) {
             case "reverse":
                 this.direction *= -1
                 break
-            case 0:
+            case "0+":
                 const hands = this.players.map(p => p.hand)
                 for (let i = 0; i < this.players.length; i++) {
                     const nextIndex = (i + this.direction + this.players.length) % this.players.length
                     this.players[nextIndex].hand = hands[i]
                 }
                 break
-            case 7:
-                if (targetPlayerId) {
-                    const target = this.players.find(p => p.id === targetPlayerId)
-                    if (target) {
-                        const temp = target.hand
-                        target.hand = player.hand
-                        player.hand = temp
-                    }
-                }
+            case "7+":
+                const temp = target.hand
+                target.hand = player.hand
+                player.hand = temp
                 break
-            case "wild":
-                if (chosenColor) card.color = chosenColor
-                break
+        }
+        this.nextPlayer()
+    }
+
+    this.playCard = function(player, playedCard) {
+        
+        this.discardPile.push(playedCard)
+        this.lastcard = playedCard
+        
+        this.applyCardEffect(player, playedCard)
+
+        return true
+    }
+
+    this.chooseColor = function() {
+        while (true) {
+            console.log("\nCouleur :")
+            CARD_COLORS.forEach(function(color, index) {console.log(`${index + 1}. ${color}`)})
+            const color = prompt("Choisissez une couleur : 1-4 : ")
+            if (color < 1 || color > 4) {
+                console.log("Choix invalide.")
+            }else {
+                return CARD_COLORS[parseInt(color) - 1]
+            }
         }
     }
 
-    this.playCard = function(playerId, card, chosenColor = null, targetPlayerId = null) {
-        const player = this.players.find(p => p.id === playerId)
-        if (!player) return false
+    this.chooseTargetPlayer = function(playerId) {
+        while (true) {
+            console.log("\nJoueurs :")
+            this.players.forEach(function(player, index) {console.log(`${index + 1}. ${player.pseudo}`)})
+            const targetIndex = parseInt(prompt("Choisissez un joueur : ")) - 1
+            if (targetIndex < 0 || targetIndex >= this.players.length) {
+                console.log("Choix invalide.")
+            } else if (targetIndex == playerId) {
+                console.log("Vous ne pouvez pas choisir vous-même.")
+            } else {
+                return this.players[targetIndex]
+            }
+        }
+    }
 
-        const cardIndex = player.hand.findIndex(c => c.color === card.color && c.value === card.value)
-        if (cardIndex === -1) return false
-        const playedCard = player.hand.splice(cardIndex, 1)[0]
+    this.chooseCardToPlay = function(player) {
+        console.log("\nMain :")
+        player.hand.forEach(function(card, index) {console.log(`${index + 1}. ${card.color} ${card.value}`)})
+        while (true) {
+            let cardIndex = prompt("Choisissez une carte (d pour piocher): ")
+            if (cardIndex.toLowerCase() == "") {
+                console.log("Vous n'avez pas choisi de carte.")
+            }else if (cardIndex == "d" || cardIndex == "D"  || (cardIndex >= 0 && cardIndex <= player.hand.length)) {
+                if (cardIndex == "d") {
+                    console.log("\nVous avez choisi de piocher.")
+                    if (this.deck.cards.length == 0) {
+                        this.reDeck()
+                    }
+                    player.draw(this.deck)
+                    this.nextPlayer()
+                    return 
+                }
+                cardIndex = parseInt(cardIndex) - 1
+                if (cardIndex < 0 || cardIndex > player.hand.length) {
+                    console.log("Choix invalide.")
+                } else {
+                    if (!this.isPlayable(player.hand[cardIndex])) {
+                        console.log("Carte non jouable.")
+                    }else {
+                        console.log(cardIndex)
+                        this.players.hand.shift() // a verifier 
+                        this.playCard(player, player.hand[cardIndex])
+                        return
+                    }
+                }
+            } else {
+                console.log("Character invalide")
+            }
+        }
+    }
 
-        if (!this.isPlayable(playedCard)) return false
-
-        this.discardPile.push(playedCard)
-        this.lastcard = playedCard
-
-        this.applyCardEffect(player, playedCard, chosenColor, targetPlayerId)
-
-        this.nextPlayer()
-        return true
+    this.reDeck = function() {
+        this.deck.cards = this.discardPile
+        this.deck.shuffle()
+        this.discardPile = []
+        console.log("la défause a étai mélanger et est redevenu la pioche")
     }
 }
+module.exports = Game

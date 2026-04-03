@@ -1,34 +1,22 @@
 const Game = require('./core/game')  
+const prompt = require("prompt-sync")();
 //test
 const playerInfos = [
-    { pseudo: "Alice", id: 1 },
-    { pseudo: "Bob", id: 2 },
-    { pseudo: "Charlie", id: 3 }
+    { pseudo: "A", id: 1 },
+    { pseudo: "B", id: 2 },
+    { pseudo: "C", id: 3 }
 ]
-
 
 const game = new Game(playerInfos)
 game.initGame()
 
-console.log("=== Début de la partie UNO ===")
-console.log("Joueurs :", game.players.map(p => p.pseudo))
-console.log("Carte de départ :", game.lastcard)
-game.players.forEach(p => {
-    console.log(`${p.pseudo} a dans sa main :`, p.hand)
-})
-
-// Simuler un tour 
-const currentPlayer = game.getCurrentPlayer()
-const firstCard = currentPlayer.hand[0]
-console.log(`\n${currentPlayer.pseudo} joue :`, firstCard)
-
-const success = game.playCard(currentPlayer.id, firstCard)
-if (success) {
-    console.log("Carte jouée avec succès !")
-} else {
-    console.log("Carte non jouable.")
+// -- definition d un tour de jeu
+while (game.status === "playing") {
+    game.Round++
+    const currentPlayer = game.getCurrentPlayer()
+    console.log(`===== Tour ${game.Round} Joueur : ${currentPlayer.pseudo} =====`)
+    console.log(`La derniere carte jouer est : ${game.lastcard.color} ${game.lastcard.value}`)
+    console.log(`Le prochain joueur est : ${game.getNextPlayer().pseudo} `)
+    game.chooseCardToPlay(currentPlayer)
 }
-
-console.log("Carte sur la défausse :", game.lastcard)
-console.log("Main des joueurs après le tour :")
-game.players.forEach(p => console.log(`${p.pseudo} :`, p.hand))
+module.exports = game
