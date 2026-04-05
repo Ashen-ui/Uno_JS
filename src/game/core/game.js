@@ -39,7 +39,6 @@ function Game(playerInfos, options) {
             this.lastcard = this.deck.draw()
         }
         this.discardPile.push(this.lastcard)
-        this.status = GAME_STATUS.PLAYING
     }
 
     this.reset = function() {
@@ -129,10 +128,8 @@ function Game(playerInfos, options) {
         
         this.discardPile.push(playedCard)
         this.lastcard = playedCard
-        
         this.applyCardEffect(player, playedCard)
-
-        return true
+        return 
     }
 
     this.chooseColor = function() {
@@ -168,7 +165,7 @@ function Game(playerInfos, options) {
         player.hand.forEach(function(card, index) {console.log(`${index + 1}. ${card.color} ${card.value}`)})
         while (true) {
             let cardIndex = prompt("Choisissez une carte (d pour piocher): ")
-            if (cardIndex.toLowerCase() == "") {
+            if (cardIndex == "") {
                 console.log("Vous n'avez pas choisi de carte.")
             }else if (cardIndex == "d" || cardIndex == "D"  || (cardIndex >= 0 && cardIndex <= player.hand.length)) {
                 if (cardIndex == "d") {
@@ -183,17 +180,16 @@ function Game(playerInfos, options) {
                 cardIndex = parseInt(cardIndex) - 1
                 if (cardIndex < 0 || cardIndex > player.hand.length) {
                     console.log("Choix invalide.")
-                } else {
+                }else {
                     if (!this.isPlayable(player.hand[cardIndex])) {
                         console.log("Carte non jouable.")
                     }else {
-                        console.log(cardIndex)
-                        this.players.hand.shift() // a verifier 
                         this.playCard(player, player.hand[cardIndex])
+                        player.hand.splice(cardIndex, 1)
                         return
                     }
                 }
-            } else {
+            }else {
                 console.log("Character invalide")
             }
         }
@@ -205,5 +201,29 @@ function Game(playerInfos, options) {
         this.discardPile = []
         console.log("la défause a étai mélanger et est redevenu la pioche")
     }
+// test de l'affichage d'une carte
+    function displayCard(color, value, faceUp) {
+        const imageUrl = `/static/Images/UNO_${color}/${value}_${color}.png`;
+        const image_back = "/static/Images/UNO_Other/Verso_Other.png";
+
+        const img = document.createElement("img");
+
+        img.src = faceUp ? imageUrl : image_back;
+        
+        img.style.width = "150px";
+        img.style.margin = "5px";
+        img.style.objectFit = "contain";
+
+        document.getElementById("cards").appendChild(img);
+
+        // TEST : affiche quelques cartes
+        displayCard("red", "5", true);
+        displayCard("yellow", "reverse", false);
+        displayCard("blue", "+2", true);
+        displayCard("green", "0", false);
+        displayCard("wild", "wild", true);
+        displayCard("Other", "Verso", false);
+    }
 }
-module.exports = Game
+
+module.exports = Game   

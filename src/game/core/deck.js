@@ -23,7 +23,7 @@ function Deck(cards,bonusCards) {
     }
 
     this.addCard = function(color, value) {
-        this.cards.push({ color, value })
+        this.cards.push({ color, value , skin: `../../../static/Images/UNO_${color}/${value} ${color}.png` , skin_back: "../../../static/Images/UNO_Other/Verso_Other.png"   })
     }
 
     this.draw = function() {

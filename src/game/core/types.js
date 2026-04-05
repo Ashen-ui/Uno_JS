@@ -4,7 +4,7 @@ const NUMBER_CARDS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 const SPECIAL_CARDS = ["skip", "reverse", "+2"]
 const WILD_CARDS = ["wild", "+4"]
 const DIRECTIONS = {CLOCKWISE: 1,COUNTER_CLOCKWISE: -1}
-const GAME_STATUS = {WAITING: "waiting",PLAYING: "playing",FINISHED: "finished"}
+const GAME_STATUS = {WAITING: "waiting",PLAYING: "playing"}
 const ADDRULES = {"0&7" : ["0+", "7+"], }
 
 module.exports = {
