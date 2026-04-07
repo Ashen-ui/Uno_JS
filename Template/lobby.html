@@ -107,7 +107,7 @@
                         <h3>${escapeHtml(room.name)}</h3>
                         <div class="room-meta">
                             <span>Hôte : ${escapeHtml(room.host)}</span>
-                            <span class="players-count">👥 ${room.players.length}/${room.maxPlayers}</span>
+                            <span class="players-count"> ${room.players.length}/${room.maxPlayers}</span>
                             <span class="badge ${isFull ? 'badge-full' : 'badge-waiting'}">
                                 ${isFull ? 'Pleine' : 'En attente'}
                             </span>
