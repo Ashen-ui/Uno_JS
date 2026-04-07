@@ -5,6 +5,7 @@ import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { fileURLToPath } from 'url'
 import path from 'path'
+import { upsertUser, getUserByGoogleId } from '../Databozi/db.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.join(__dirname, '../../')
@@ -31,11 +32,20 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
-    return done(null, profile)
+    const user = upsertUser({
+        google_id: profile.id,
+        name: profile.displayName,
+        email: profile.emails?.[0]?.value ?? null,
+        avatar: profile.photos?.[0]?.value ?? null
+    })
+    return done(null, user)
 }))
 
-passport.serializeUser((user, done) => done(null, user))
-passport.deserializeUser((user, done) => done(null, user))
+passport.serializeUser((user, done) => done(null, user.google_id))
+passport.deserializeUser((google_id, done) => {
+    const user = getUserByGoogleId(google_id)
+    done(null, user ?? false)
+})
 
 // Middleware de protection des routes
 function requireAuth(req, res, next) {
@@ -60,6 +70,45 @@ app.get('/auth/google/callback',
 // Déconnexion
 app.get('/logout', (req, res) => {
     req.logout(() => res.redirect('/connexion'))
+})
+
+// Stockage des salles en mémoire
+const rooms = new Map()
+
+// API
+app.get('/api/me', requireAuth, (req, res) => {
+    const { name, email, avatar, games_played, games_won } = req.user
+    res.json({ name, email, avatar, games_played, games_won })
+})
+
+app.get('/api/rooms', requireAuth, (req, res) => {
+    res.json([...rooms.values()])
+})
+
+app.post('/api/rooms', requireAuth, express.json(), (req, res) => {
+    const { name } = req.body
+    if (!name?.trim()) return res.status(400).json({ error: 'Nom requis' })
+    const id = Date.now().toString()
+    const room = {
+        id,
+        name: name.trim(),
+        host: req.user.name,
+        players: [req.user.name],
+        maxPlayers: 4,
+        status: 'waiting'
+    }
+    rooms.set(id, room)
+    res.json(room)
+})
+
+app.post('/api/rooms/:id/join', requireAuth, (req, res) => {
+    const room = rooms.get(req.params.id)
+    if (!room) return res.status(404).json({ error: 'Salle introuvable' })
+    if (room.players.length >= room.maxPlayers) return res.status(400).json({ error: 'Salle pleine' })
+    if (!room.players.includes(req.user.name)) {
+        room.players.push(req.user.name)
+    }
+    res.json(room)
 })
 
 // Routes protégées

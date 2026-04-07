@@ -2,27 +2,181 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/static/image/logo.png">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title>About - Group Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby – UNO WEB</title>
+    <link rel="stylesheet" href="/Template/style.css">
 </head>
 <body class="page">
-<!-- Page top "navigation bar" -->
     <header class="site-header">
         <div class="header-content">
-            
-        </nav>
+            <div class="header-logo">
+                <a href="/index" class="brand-title">UNO WEB</a>
+            </div>
+            <nav class="header-nav">
+                <span id="header-username" class="header-username"></span>
+            </nav>
         </div>
     </header>
-<!-- Page Content -->
+
     <div class="container">
-        <main class="content">
-            
-        </main>
+        <div class="lobby-layout">
+
+            <!-- Colonne gauche : profil -->
+            <aside>
+                <div class="profile-card">
+                    <div id="avatar-container">
+                        <div class="profile-avatar-placeholder" id="avatar-placeholder">?</div>
+                    </div>
+                    <div class="profile-name" id="profile-name">Chargement...</div>
+                    <div class="profile-email" id="profile-email"></div>
+                    <button class="btn-logout" onclick="window.location.href='/logout'">Se déconnecter</button>
+                </div>
+            </aside>
+
+            <!-- Colonne droite : salles -->
+            <main>
+                <!-- Créer une salle -->
+                <div class="create-section">
+                    <h2>Créer une partie</h2>
+                    <div class="create-row">
+                        <input type="text" id="room-name-input" placeholder="Nom de la salle..." maxlength="30">
+                        <button onclick="createRoom()">Créer</button>
+                    </div>
+                    <div id="create-error" class="create-error"></div>
+                </div>
+
+                <!-- Liste des salles -->
+                <div class="rooms-section">
+                    <div class="rooms-header">
+                        <h2>Salles disponibles</h2>
+                        <button class="refresh-btn" onclick="loadRooms()">Actualiser</button>
+                    </div>
+                    <div id="rooms-list">
+                        <div class="empty-state">
+                            <p>Chargement des salles...</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
     </div>
-<!-- Page bottom -->
+
     <footer class="site-footer">
-        <p>&copy; 2025 Group Tracker. All rights reserved.</p>
+        <p>&copy; 2026 UNO WEB. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Charger le profil utilisateur
+        async function loadProfile() {
+            const res = await fetch('/api/me')
+            if (!res.ok) { window.location.href = '/connexion'; return }
+            const user = await res.json()
+
+            document.getElementById('profile-name').textContent = user.name
+            document.getElementById('profile-email').textContent = user.email || ''
+            document.getElementById('header-username').textContent = user.name
+
+            if (user.avatar) {
+                const container = document.getElementById('avatar-container')
+                container.innerHTML = `<img class="profile-avatar" src="${user.avatar}" alt="${user.name}">`
+            } else {
+                document.getElementById('avatar-placeholder').textContent = user.name.charAt(0).toUpperCase()
+            }
+        }
+
+        // Charger les salles
+        async function loadRooms() {
+            const res = await fetch('/api/rooms')
+            const rooms = await res.json()
+            const container = document.getElementById('rooms-list')
+
+            if (rooms.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <p>Aucune salle disponible. Sois le premier à créer une partie !</p>
+                    </div>`
+                return
+            }
+
+            container.innerHTML = rooms.map(room => {
+                const isFull = room.players.length >= room.maxPlayers
+                return `
+                <div class="room-item">
+                    <div class="room-info">
+                        <h3>${escapeHtml(room.name)}</h3>
+                        <div class="room-meta">
+                            <span>Hôte : ${escapeHtml(room.host)}</span>
+                            <span class="players-count">👥 ${room.players.length}/${room.maxPlayers}</span>
+                            <span class="badge ${isFull ? 'badge-full' : 'badge-waiting'}">
+                                ${isFull ? 'Pleine' : 'En attente'}
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-join" ${isFull ? 'disabled' : ''} onclick="joinRoom('${room.id}')">
+                        ${isFull ? 'Pleine' : 'Rejoindre'}
+                    </button>
+                </div>`
+            }).join('')
+        }
+
+        // Créer une salle
+        async function createRoom() {
+            const input = document.getElementById('room-name-input')
+            const errorEl = document.getElementById('create-error')
+            const name = input.value.trim()
+
+            errorEl.style.display = 'none'
+
+            if (!name) {
+                errorEl.textContent = 'Donne un nom à ta salle.'
+                errorEl.style.display = 'block'
+                return
+            }
+
+            const res = await fetch('/api/rooms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            })
+
+            if (!res.ok) {
+                const err = await res.json()
+                errorEl.textContent = err.error
+                errorEl.style.display = 'block'
+                return
+            }
+
+            input.value = ''
+            loadRooms()
+        }
+
+        // Rejoindre une salle
+        async function joinRoom(id) {
+            const res = await fetch(`/api/rooms/${id}/join`, { method: 'POST' })
+            if (res.ok) {
+                window.location.href = '/game'
+            } else {
+                const err = await res.json()
+                alert(err.error)
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        }
+
+        // Entrée clavier pour créer
+        document.getElementById('room-name-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') createRoom()
+        })
+
+        // Init
+        loadProfile()
+        loadRooms()
+
+        // Actualisation auto toutes les 10s
+        setInterval(loadRooms, 10000)
+    </script>
 </body>
 </html>
