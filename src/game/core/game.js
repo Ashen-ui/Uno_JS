@@ -14,6 +14,7 @@ function Game(playerInfos, options) {
     this.ncard = 7
     this.lastcard = null
     this.Round = 0
+    this.stackCount = 0
 
     this.initGame = function() {
         // cree et melanger le deck
@@ -71,10 +72,17 @@ function Game(playerInfos, options) {
         return this.currentPlayerIndex = this.getNextPlayerIndex()
     }
 
-    this.isPlayable = function(card) {
-        return card.color === this.lastcard.color ||
-            card.value === this.lastcard.value ||
-            WILD_CARDS.includes(card.color) 
+    this.isPlayable = function(card, count = 0) {
+        if (count > 0) {
+            if (this.lastcard.value === "+2") {
+                return true
+            }else if (this.lastcard.value === "+4") {
+                return true
+            }
+        }else {
+            return card.color === this.lastcard.color || card.value === this.lastcard.value || WILD_CARDS.includes(card.color) 
+        }
+        return false
     }
 
     this.applyCardEffect = function(player, card) {
@@ -95,12 +103,10 @@ function Game(playerInfos, options) {
 
         switch (card.value) {
             case "+2":
-                for (let i = 0; i < 2; i++) this.getNextPlayer().draw(this.deck)
-                this.nextPlayer()
+                this.stackCount += 2
                 break
             case "+4":
-                for (let i = 0; i < 4; i++) this.getNextPlayer().draw(this.deck)
-                this.nextPlayer()
+                this.stackCount += 4
                 break
             case "skip":
                 this.nextPlayer()
@@ -163,22 +169,43 @@ function Game(playerInfos, options) {
     this.chooseCardToPlay = function(player) {
         console.log("\nMain :")
         player.hand.forEach(function(card, index) {console.log(`${index + 1}. ${card.color} ${card.value}`)})
+
+        if (this.stackCount > 0 && (this.lastcard.value === "+2" || this.lastcard.value === "+4")) {
+            switch (this.lastcard.value) {
+                case "+2":
+                    console.log(`Vous devez jouer une carte +2 ou +4 pour empiler (${this.stackCount} cartes à piocher) ou piocher les cartes.`)
+                    break
+                case "+4":
+                    console.log(`Vous devez jouer une carte +4 pour empiler (${this.stackCount} cartes à piocher) ou piocher les cartes.`)
+                    break
+            }
+        }
         while (true) {
             let cardIndex = prompt("Choisissez une carte (d pour piocher): ")
+            if (cardIndex == "end") {
+                console.log("Fin du jeu.")
+                this.status = GAME_STATUS.ENDED
+                return
+            }
             if (cardIndex == "") {
                 console.log("Vous n'avez pas choisi de carte.")
-            }else if (cardIndex == "d" || cardIndex == "D"  || (cardIndex >= 0 && cardIndex <= player.hand.length)) {
-                if (cardIndex == "d") {
+            }else if (cardIndex == "d" || cardIndex == "D"  || (cardIndex >= 0 && cardIndex < player.hand.length)) {
+                if (cardIndex == "d" || cardIndex == "D" ) {
                     console.log("\nVous avez choisi de piocher.")
                     if (this.deck.cards.length == 0) {
                         this.reDeck()
                     }
-                    player.draw(this.deck)
+                    if (this.stackCount > 0) {
+                        console.log(`Vous devez piocher ${this.stackCount} cartes.`)
+                        for (let i = 0; i < this.stackCount; i++) {player.draw(this.deck)}
+                    }else {
+                        player.draw(this.deck)
+                    }
                     this.nextPlayer()
                     return 
                 }
                 cardIndex = parseInt(cardIndex) - 1
-                if (cardIndex < 0 || cardIndex > player.hand.length) {
+                if ((cardIndex < 0 || cardIndex > player.hand.length)) {
                     console.log("Choix invalide.")
                 }else {
                     if (!this.isPlayable(player.hand[cardIndex])) {

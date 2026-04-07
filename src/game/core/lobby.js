@@ -57,6 +57,10 @@ function Lobby_manager() {
     }
 
     this.startGame = function(playerInfos) {
+        if (playerInfos.length < 2) {
+            console.log("Not enough players to start the game.")
+            return
+        }
         const game = new Game(playerInfos)
         game.initGame()
         game.status = "playing"

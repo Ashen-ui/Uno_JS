@@ -5,7 +5,11 @@ function Card(color, value) {
 
 
 }
-
+// card a ADD :
+// cible +2
+// cible +4
+// tt le monde pioche 2 cartes
+// 
 Cards = {
     "red 0": new Card("red", 0, "red_0.png"),
     "red 1": new Card("red", 1, "red_1.png"),
