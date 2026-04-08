@@ -7,6 +7,7 @@ function Player(pseudo, id, hand) {
     this.hand = hand || []
     this.isUno = false
     this.isReady = false
+    this.level = 0
 
 
     this.draw = function(deck) {

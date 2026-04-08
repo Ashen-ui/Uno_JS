@@ -2,27 +2,112 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/static/image/logo.png">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title>About - Group Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partie - UNO WEB</title>
+    <link rel="stylesheet" href="/static/Images/style.css">
+    <style>
+        .cards-row {
+            align-items: center;
+        }
+
+        .uno-card {
+            width: 82px;
+            height: 126px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .uno-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
+        }
+    </style>
 </head>
 <body class="page">
-<!-- Page top "navigation bar" -->
     <header class="site-header">
         <div class="header-content">
-            
-        </nav>
+            <div class="header-logo">
+                <a href="/index" class="brand-title">UNO WEB</a>
+            </div>
+            <nav class="header-nav">
+                <span id="header-username" class="header-username"></span>
+                <a href="/lobby">Lobby</a>
+                <a href="/logout">Se deconnecter</a>
+            </nav>
         </div>
     </header>
-<!-- Page Content -->
-    <div class="container">
-        <main class="content">
-            
-        </main>
-    </div>
-<!-- Page bottom -->
+
+    <main class="container">
+        <section class="game-board">
+            <div class="score-board">
+                <h2>Partie en cours</h2>
+                <p>Tour: <strong id="turn-player">-</strong></p>
+                <p>Etat: <strong id="game-status">En attente...</strong></p>
+            </div>
+
+            <div class="discard-pile">
+                <h3>Defausse</h3>
+                <div class="cards-row">
+                    <div class="uno-card" id="top-card">
+                        <img src="/static/Images/UNO_red/5_red.png" alt="Carte 5 rouge">
+                    </div>
+                </div>
+            </div>
+
+            <div class="draw-pile">
+                <h3>Pioche</h3>
+                <p id="draw-count">Cartes restantes: 72</p>
+                <button id="draw-btn" class="btn-secondary" type="button">Piocher une carte</button>
+                <button id="uno-btn" type="button">UNO !</button>
+            </div>
+
+            <div class="player-hand">
+                <h3>Ma main</h3>
+                <div class="cards-row" id="player-hand-cards">
+                    <div class="uno-card">
+                        <img src="/static/Images/UNO_red/7_red.png" alt="Carte 7 rouge">
+                    </div>
+                    <div class="uno-card">
+                        <img src="/static/Images/UNO_blue/2_blue.png" alt="Carte 2 bleue">
+                    </div>
+                    <div class="uno-card">
+                        <img src="/static/Images/UNO_yellow/+2_yellow.png" alt="Carte +2 jaune">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer class="site-footer">
-        <p>&copy; 2026 Group Tracker. All rights reserved.</p>
+        <p>&copy; 2026 UNO WEB.</p>
     </footer>
+
+    <script>
+        async function loadProfile() {
+            const res = await fetch('/api/me')
+            if (!res.ok) {
+                window.location.href = '/connexion'
+                return
+            }
+
+            const user = await res.json()
+            document.getElementById('header-username').textContent = user.name || 'Joueur'
+        }
+
+        document.getElementById('draw-btn').addEventListener('click', () => {
+            document.getElementById('game-status').textContent = 'Action: pioche'
+        })
+
+        document.getElementById('uno-btn').addEventListener('click', () => {
+            document.getElementById('game-status').textContent = 'UNO annonce'
+        })
+
+        loadProfile()
+    </script>
 </body>
 </html>

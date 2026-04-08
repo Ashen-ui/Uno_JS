@@ -2,27 +2,40 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/static/image/logo.png">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title>About - Group Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/Images/style.css">
+    <title>Accueil - UNO WEB</title>
 </head>
 <body class="page">
-<!-- Page top "navigation bar" -->
+    <!-- Page top -->
     <header class="site-header">
         <div class="header-content">
-            
-        </nav>
+            <div class="header-logo">
+                <a href="/index" class="brand-title">UNO WEB</a>
+            </div>
+            <nav class="header-nav">
+                <a href="/inscription" class="nav-link">Inscription</a>
+                <a href="/connexion" class="nav-link">Connexion</a>
+            </nav>
         </div>
     </header>
-<!-- Page Content -->
+
+    <!-- Page content -->
     <div class="container">
         <main class="content">
-            
+            <div class="page-header">
+                <h1>Bienvenue sur UNO WEB</h1>
+                <p>Connecte-toi pour rejoindre une partie en ligne.</p>
+                <form method="GET" action="/connexion" class="connexion-form">
+                    <button type="submit" class="connexion-button">Se connecter</button>
+                </form>
+            </div>
         </main>
     </div>
-<!-- Page bottom -->
+
+    <!-- Page bottom -->
     <footer class="site-footer">
-        <p>&copy; 2025 Group Tracker. All rights reserved.</p>
+        <p>&copy; 2026 UNO WEB. All rights reserved.</p>
     </footer>
 </body>
 </html>

@@ -15,6 +15,8 @@ function Game(playerInfos, options) {
     this.lastcard = null
     this.Round = 0
     this.stackCount = 0
+    this.level = 0
+  
 
     this.initGame = function() {
         // cree et melanger le deck
@@ -92,6 +94,7 @@ function Game(playerInfos, options) {
                 card.color = this.chooseColor()
                 break
         }
+
         if (card.value == "7+" || card.value == "0+") {
             target = this.chooseTargetPlayer(player.id)
         }
@@ -125,6 +128,28 @@ function Game(playerInfos, options) {
                 const temp = target.hand
                 target.hand = player.hand
                 player.hand = temp
+                break
+            //la règle de cette carte est de faire gagner le joueur s'il possède 4 cartes exodia avec la valeur exodia_part de plus la carte sert de +4 si elle est utilisé seule et choisis une couleur pour la partie.
+            case "Exodia_part":
+                if (player.hand.filter(card => card.value === "Exodia_part").length == 4) {
+                    console.log(`${player.pseudo} a gagné la partie avec la carte Exodia.`)
+                    this.status = GAME_STATUS.ENDED
+                    return
+                }
+                else if (player.hand.filter(card => card.value === "Exodia_part").length == 1) {
+                    console.log(`${player.pseudo} a utilisé la carte Exodia comme +4 et choisis la couleur ${this.chooseColor()}.`)
+                    this.stackCount += 4
+                    card.color = this.chooseColor()
+                    return
+                }
+                break
+            case "C+2":
+                target = this.chooseTargetPlayer(player.id)
+                target.stackCount += 2
+                break
+            case "C+4":
+                target = this.chooseTargetPlayer(player.id)
+                target.stackCount += 4
                 break
         }
         this.nextPlayer()

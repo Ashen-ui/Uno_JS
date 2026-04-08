@@ -19,3 +19,4 @@ module.exports = {
   GAME_STATUS,
   ADDRULES
 }
+
