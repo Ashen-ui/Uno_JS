@@ -53,9 +53,7 @@
             <div class="discard-pile">
                 <h3>Defausse</h3>
                 <div class="cards-row">
-                    <div class="uno-card" id="top-card">
-                        <img src="/static/Images/UNO_red/5_red.png" alt="Carte 5 rouge">
-                    </div>
+                    <div class="uno-card" id="top-card">-</div>
                 </div>
             </div>
 
@@ -64,21 +62,12 @@
                 <p id="draw-count">Cartes restantes: 72</p>
                 <button id="draw-btn" class="btn-secondary" type="button">Piocher une carte</button>
                 <button id="uno-btn" type="button">UNO !</button>
+                <button id="start-btn" type="button">Lancer la partie</button>
             </div>
 
             <div class="player-hand">
                 <h3>Ma main</h3>
-                <div class="cards-row" id="player-hand-cards">
-                    <div class="uno-card">
-                        <img src="/static/Images/UNO_red/7_red.png" alt="Carte 7 rouge">
-                    </div>
-                    <div class="uno-card">
-                        <img src="/static/Images/UNO_blue/2_blue.png" alt="Carte 2 bleue">
-                    </div>
-                    <div class="uno-card">
-                        <img src="/static/Images/UNO_yellow/+2_yellow.png" alt="Carte +2 jaune">
-                    </div>
-                </div>
+                <div class="cards-row" id="player-hand-cards"></div>
             </div>
         </section>
     </main>
@@ -88,26 +77,135 @@
     </footer>
 
     <script>
-        async function loadProfile() {
-            const res = await fetch('/api/me')
-            if (!res.ok) {
-                window.location.href = '/connexion'
-                return
-            }
+        const COLORS = ['red', 'blue', 'green', 'yellow']
+        let gameState = null
+        let currentUser = null
 
-            const user = await res.json()
+        function cardLabel(card) {
+            if (!card) return '-'
+            return `${card.value} ${card.color === 'wild' ? '' : card.color}`.trim()
+        }
+
+        function setStatus(text) {
+            document.getElementById('game-status').textContent = text
+        }
+
+        async function api(path, options = {}) {
+            const res = await fetch(path, options)
+            const contentType = res.headers.get('content-type') || ''
+            const payload = contentType.includes('application/json') ? await res.json() : await res.text()
+            if (!res.ok) {
+                const errorMessage = typeof payload === 'string' ? payload : payload.error
+                throw new Error(errorMessage || 'Erreur API')
+            }
+            return payload
+        }
+
+        async function loadProfile() {
+            const user = await api('/api/me')
+            currentUser = user
             document.getElementById('header-username').textContent = user.name || 'Joueur'
         }
 
-        document.getElementById('draw-btn').addEventListener('click', () => {
-            document.getElementById('game-status').textContent = 'Action: pioche'
-        })
+        function render() {
+            if (!gameState) return
+            document.getElementById('turn-player').textContent = gameState.turnPlayer || '-'
+            document.getElementById('draw-count').textContent = `Cartes restantes: ${gameState.drawCount}`
+            document.getElementById('top-card').textContent = cardLabel(gameState.topCard)
+            document.getElementById('top-card').style.borderColor = gameState.currentColor || 'rgba(255, 255, 255, 0.18)'
+            document.getElementById('game-status').textContent = gameState.status === 'ended'
+                ? `Partie terminee - gagnant: ${gameState.winner}`
+                : `Couleur active: ${gameState.currentColor}`
 
-        document.getElementById('uno-btn').addEventListener('click', () => {
-            document.getElementById('game-status').textContent = 'UNO annonce'
-        })
+            const handContainer = document.getElementById('player-hand-cards')
+            handContainer.innerHTML = ''
+            gameState.hand.forEach((card, idx) => {
+                const btn = document.createElement('button')
+                btn.type = 'button'
+                btn.className = 'uno-card'
+                btn.textContent = cardLabel(card)
+                btn.style.borderColor = card.color === 'wild' ? '#fff' : card.color
+                btn.onclick = () => playCard(idx, card)
+                handContainer.appendChild(btn)
+            })
 
-        loadProfile()
+            const isTurn = gameState.turnPlayer === currentUser?.name && gameState.status === 'playing'
+            document.getElementById('draw-btn').disabled = !isTurn
+            document.getElementById('uno-btn').disabled = !isTurn
+            document.getElementById('start-btn').disabled = gameState.status === 'playing'
+        }
+
+        async function loadGameState() {
+            try {
+                gameState = await api('/api/game/state')
+                render()
+            } catch (err) {
+                setStatus(err.message)
+            }
+        }
+
+        async function startGame() {
+            try {
+                gameState = await api('/api/game/start', { method: 'POST' })
+                render()
+            } catch (err) {
+                setStatus(err.message)
+            }
+        }
+
+        async function playCard(index, card) {
+            if (!gameState || gameState.turnPlayer !== currentUser?.name) return
+            let chosenColor
+            if (card.color === 'wild') {
+                chosenColor = prompt('Choisis une couleur: red, blue, green, yellow', 'red')
+                if (!COLORS.includes(chosenColor)) {
+                    setStatus('Couleur invalide')
+                    return
+                }
+            }
+            try {
+                gameState = await api('/api/game/play', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cardIndex: index, chosenColor })
+                })
+                render()
+            } catch (err) {
+                setStatus(err.message)
+            }
+        }
+
+        async function drawCard() {
+            try {
+                gameState = await api('/api/game/draw', { method: 'POST' })
+                render()
+            } catch (err) {
+                setStatus(err.message)
+            }
+        }
+
+        async function callUno() {
+            try {
+                await api('/api/game/uno', { method: 'POST' })
+                setStatus('UNO annonce')
+            } catch (err) {
+                setStatus(err.message)
+            }
+        }
+
+        document.getElementById('draw-btn').addEventListener('click', drawCard)
+        document.getElementById('uno-btn').addEventListener('click', callUno)
+        document.getElementById('start-btn').addEventListener('click', startGame)
+
+        ;(async function init() {
+            try {
+                await loadProfile()
+                await loadGameState()
+                setInterval(loadGameState, 3000)
+            } catch (err) {
+                window.location.href = '/connexion'
+            }
+        })()
     </script>
 </body>
 </html>
