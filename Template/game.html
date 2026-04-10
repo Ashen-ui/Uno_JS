@@ -86,6 +86,26 @@
             return `${card.value} ${card.color === 'wild' ? '' : card.color}`.trim()
         }
 
+        function cardImagePath(card) {
+            if (!card) return null
+            if (card.color === 'wild') {
+                return `/static/Images/UNO_Other/${card.value}_Other.png`
+            }
+            return `/static/Images/UNO_${card.color}/${card.value}_${card.color}.png`
+        }
+
+        function renderCardFace(container, card) {
+            container.innerHTML = ''
+            const img = document.createElement('img')
+            img.src = cardImagePath(card)
+            img.alt = cardLabel(card)
+            img.onerror = () => {
+                container.innerHTML = ''
+                container.textContent = cardLabel(card)
+            }
+            container.appendChild(img)
+        }
+
         function setStatus(text) {
             document.getElementById('game-status').textContent = text
         }
@@ -111,20 +131,26 @@
             if (!gameState) return
             document.getElementById('turn-player').textContent = gameState.turnPlayer || '-'
             document.getElementById('draw-count').textContent = `Cartes restantes: ${gameState.drawCount}`
-            document.getElementById('top-card').textContent = cardLabel(gameState.topCard)
-            document.getElementById('top-card').style.borderColor = gameState.currentColor || 'rgba(255, 255, 255, 0.18)'
+            const topCardEl = document.getElementById('top-card')
+            renderCardFace(topCardEl, gameState.topCard)
+            topCardEl.style.borderColor = gameState.currentColor || 'rgba(255, 255, 255, 0.18)'
             document.getElementById('game-status').textContent = gameState.status === 'ended'
                 ? `Partie terminee - gagnant: ${gameState.winner}`
                 : `Couleur active: ${gameState.currentColor}`
 
             const handContainer = document.getElementById('player-hand-cards')
             handContainer.innerHTML = ''
+            if (gameState.hand.length === 0) {
+                const empty = document.createElement('p')
+                empty.textContent = 'Aucune carte. Lance la partie depuis cette salle.'
+                handContainer.appendChild(empty)
+            }
             gameState.hand.forEach((card, idx) => {
                 const btn = document.createElement('button')
                 btn.type = 'button'
                 btn.className = 'uno-card'
-                btn.textContent = cardLabel(card)
                 btn.style.borderColor = card.color === 'wild' ? '#fff' : card.color
+                renderCardFace(btn, card)
                 btn.onclick = () => playCard(idx, card)
                 handContainer.appendChild(btn)
             })
