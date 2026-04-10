@@ -1,16 +1,25 @@
-const { NUMBER_CARDS, SPECIAL_CARDS, WILD_CARDS, CARD_COLORS, DIRECTIONS, GAME_STATUS } = require('./types')
+const {WILD_CARDS, CARD_COLORS, DIRECTIONS, GAME_STATUS ,ADDRULES} = require('./types')
 const Deck = require('./deck')
 const Player = require('./player')
 const prompt = require("prompt-sync")();
 
-function Game(playerInfos, options) {
+function Game(playerInfos) {
     this.players = []
     this.currentPlayerIndex = 0
     this.direction = DIRECTIONS.CLOCKWISE
     this.status = GAME_STATUS.WAITING
     this.deck = new Deck()
     this.discardPile = []
-    this.options = options || {}
+    this.mutations = {
+        "0&7" : false, 
+        "Exodia" : false, 
+        "Cible" : false,
+        "Everyone_draw" : false,
+        "Extreme" : false,
+        "Roulette" : false,//pioche jusqu'a ce que tu trouve une carte de la couleur choisie
+        "Stacking" : false// pose tt les carte de la meme couleur
+    }
+  
     this.ncard = 7
     this.lastcard = null
     this.Round = 0
@@ -18,7 +27,7 @@ function Game(playerInfos, options) {
 
     this.initGame = function() {
         // cree et melanger le deck
-        this.deck.initDeck()
+        this.deck.initDeck(this.mutations)
         this.deck.shuffle()
 
         // cree les joueurs
@@ -86,7 +95,6 @@ function Game(playerInfos, options) {
     }
 
     this.applyCardEffect = function(player, card) {
-
         switch (card.color) {
             case "wild":
                 card.color = this.chooseColor()
@@ -250,6 +258,28 @@ function Game(playerInfos, options) {
         displayCard("green", "0", false);
         displayCard("wild", "wild", true);
         displayCard("Other", "Verso", false);
+    }
+
+    this.SelectMutations = function() {
+        while (true) {
+            console.log("Available Mutations:")
+            let x = 0
+            for (const mutation in ADDRULES) {
+                console.log(`${x} - ${mutation}`)
+                 x ++
+            }
+            const selected = prompt("Select mutations (separer pas une virgule):")
+            const IndexselectedMutations = selected.split(",").map(s => s.trim())
+            if (IndexselectedMutations.every(index => index >= 0 && index < Object.keys(ADDRULES).length)) {
+                IndexselectedMutations.forEach(index => {
+                    const mutationName = Object.keys(ADDRULES)[index]
+                    this.mutations[mutationName] = true
+                })
+                break
+            }else {
+                console.log("Invalid selection, please try again.")
+            }
+        }
     }
 }
 

@@ -1,4 +1,6 @@
 const Game = require("./game")
+const ADDRULES = require("./types").ADDRULES
+const prompt = require("prompt-sync")();
 
 function Lobby(name, maxPlayers, players = [], password = null) {
     this.name = name
@@ -62,9 +64,9 @@ function Lobby_manager() {
             return
         }
         const game = new Game(playerInfos)
+        game.SelectMutations()
         game.initGame()
         game.status = "playing"
-
         while (game.status === "playing") {
             game.Round++
             const currentPlayer = game.getCurrentPlayer()

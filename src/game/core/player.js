@@ -1,5 +1,4 @@
 
-
 function Player(pseudo, id, hand) {
     this.pseudo = pseudo
     this.id = id

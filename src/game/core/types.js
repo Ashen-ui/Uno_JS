@@ -5,9 +5,14 @@ const SPECIAL_CARDS = ["skip", "reverse", "+2"]
 const WILD_CARDS = ["wild", "+4"]
 const DIRECTIONS = {CLOCKWISE: 1,COUNTER_CLOCKWISE: -1}
 const GAME_STATUS = {WAITING: "waiting",PLAYING: "playing"}
-const ADDRULES = {"0&7" : ["0+", "7+"],"Exodia" : ["Exodia_part"], "Cible" : ["C+2", "C+4"],
-   "Everyone_draw" : ["E+2", "E+4"], "Extreme" : ["reverse+4","+6","+10"], "Roulette" : ["R"],
-   "Stacking" : ["stack"]
+const ADDRULES = {
+    "0&7" : {"Colors" : ["0+", "7+"]}, 
+    "Exodia" : {"Wild" : ["Exodia_part"]}, 
+    "Cible" : {"Colors" : ["C+2", "C+4"]},
+    "Everyone_draw" : {"Colors" : ["E+2", "E+4"]}, 
+    "Extreme" : {"Colors" : ["+2", "+4"],"Wild" : ["reverse+4","+6","+10"]}, 
+    "Roulette" : {"Wild" : ["roulette"]},//pioche jusqu'a ce que tu trouve une carte de la couleur choisie
+    "Stacking" : {"Colors" : ["stack"]}// pose tt les carte de la meme couleur 
   }
 
 module.exports = {

@@ -16,6 +16,7 @@ const LobbyManager = new Lobby.Lobby_manager()
 const lobby1 = LobbyManager.createLobby("TestLobby", 4)
 const lobby2 = LobbyManager.createLobby("TestLobbyy", 4)
 
+
 playerInfos.map((info) => LobbyManager.joinLobby("TestLobby", info))
 playerInfos2.map((info) => LobbyManager.joinLobby("TestLobbyy", info))
 
