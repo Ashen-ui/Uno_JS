@@ -29,7 +29,7 @@
                     </div>
                     <div class="profile-name" id="profile-name">Chargement...</div>
                     <div class="profile-email" id="profile-email"></div>
-                    <button class="btn-logout" onclick="window.location.href='/logout'">Se déconnecter</button>
+                    <button class="btn-logout" onclick="window.location.href='/'">Se déconnecter</button>
                 </div>
             </aside>
 
@@ -69,8 +69,8 @@
     <script>
         // Charger le profil utilisateur
         async function loadProfile() {
-            const res = await fetch('/api/me')
-            if (!res.ok) { window.location.href = '/connexion'; return }
+            // const res = await fetch('/api/me')
+            // if (!res.ok) { window.location.href = '/connexion'; return }
             const user = await res.json()
 
             document.getElementById('profile-name').textContent = user.name

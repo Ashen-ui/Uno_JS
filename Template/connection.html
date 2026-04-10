@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="/static/Images/style.css">
 </head>
 <body class="page">
+    <!-- Page top -->
     <header class="site-header">
         <div class="header-content">
             <div class="header-logo">
                 <a href="/index" class="brand-title">UNO WEB</a>
             </div>
+            <nav class="header-nav">
+                <a href="/inscription" class="nav-link">Inscription</a>
+                <a href="/connexion" class="nav-link">Connexion</a>
+            </nav>
         </div>
     </header>
     <main class="content">
@@ -25,7 +30,7 @@
 
             <div class="separator">ou</div>
 
-            <form action="/connexion" method="post">
+            <form action="/connection" method="get">
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Mot de passe</label>
