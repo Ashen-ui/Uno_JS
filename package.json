@@ -1,5 +1,19 @@
 {
+  "name": "uno-js",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Jeu UNO en ligne",
+  "main": "src/server/start.js",
+  "scripts": {
+    "start": "node src/server/start.js",
+    "dev": "node --watch src/server/start.js"
+  },
   "dependencies": {
-    "prompt-sync": "^4.2.0"
+    "better-sqlite3": "^12.8.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
   }
 }
