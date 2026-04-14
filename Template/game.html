@@ -3,56 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partie - UNO WEB</title>
+    <title>UNO - Partie en cours</title>
     <link rel="stylesheet" href="/static/Images/style.css">
-    
+    <link rel="stylesheet" href="/static/css/game.css">
 </head>
 <body class="page">
+    <!-- Header -->
     <header class="site-header">
         <div class="header-content">
             <div class="header-logo">
                 <a href="/" class="brand-title">UNO WEB</a>
             </div>
+            <div class="game-info">
+                <span class="current-player">Tour: <span id="header-current-player">-</span></span>
+                <span class="round-display">Manche: <span id="header-round">0</span></span>
+            </div>
             <nav class="header-nav">
                 <span id="header-username" class="header-username"></span>
-                <a href="/lobby">Lobby</a>
-                <a href="/">Se deconnecter</a>
+                <a href="/lobby">Quitter</a>
             </nav>
         </div>
     </header>
 
-    <main class="container">
-        <section class="game-board">
-            <div class="score-board">
-                <h2>Partie en cours</h2>
-                <p>Tour: <strong id="turn-player">-</strong></p>
-                <p>Etat: <strong id="game-status">En attente...</strong></p>
-            </div>
+    <!-- Main Game Container -->
+    <main class="game-main">
+        
+        <!-- Game Board -->
+        <div class="game-board">
 
-            <div class="discard-pile">
-                <h3>Defausse</h3>
-                <div class="cards-row">
-                    <div class="uno-card" id="top-card">-</div>
+            <!-- Players Around Board -->
+            <div class="players-top" id="players-top-area"></div>
+            <div class="players-left" id="players-left-area"></div>
+            <div class="players-right" id="players-right-area"></div>
+
+            <!-- Center Game Area -->
+            <div class="game-center-area">
+                <!-- Draw Pile -->
+                <div class="pile-section">
+                    <div class="card card-back" id="draw-pile-card">
+                        <span class="card-count" id="deck-count">72</span>
+                    </div>
+                    <button class="btn-draw" id="draw-btn">Piocher</button>
+                </div>
+
+                <!-- Last Card Played -->
+                <div class="pile-section">
+                    <div class="card card-display" id="top-card">
+                        <span class="card-placeholder">?</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="draw-pile">
-                <h3>Pioche</h3>
-                <p id="draw-count">Cartes restantes: 72</p>
-                <button id="draw-btn" class="btn-secondary" type="button">Piocher une carte</button>
-                <button id="uno-btn" type="button">UNO !</button>
-                <button id="start-btn" type="button">Lancer la partie</button>
+            <!-- Action Buttons -->
+            <div class="action-buttons-top">
+                <button class="btn-action uno-btn" id="uno-btn" title="Déclarer UNO" style="display: none;">
+                    🎯 UNO
+                </button>
+                <button class="btn-action contra-btn" id="contra-uno-btn" title="Contre UNO" style="display: none;">
+                    🚫 Contre UNO
+                </button>
             </div>
 
-            <div class="player-hand">
-                <h3>Ma main</h3>
-                <div class="cards-row" id="player-hand-cards"></div>
+        </div>
+
+        <!-- Player Hand Section (Bottom) -->
+        <div class="player-hand-bottom">
+            <div class="hand-info">
+                <h3>Ma Main</h3>
+                <span class="hand-count" id="hand-count">0 cartes</span>
             </div>
-        </section>
+            <div class="player-hand" id="player-hand-cards"></div>
+        </div>
+
+        <!-- Mutations Info -->
+        <div class="mutations-panel">
+            <h4>Modifications Actives</h4>
+            <div id="mutations-list" class="mutations-list"></div>
+        </div>
+
     </main>
-
     <footer class="site-footer">
-        <p>&copy; 2026 UNO WEB.</p>
+        <p>&copy; 2026 UNO WEB - by Ynov</p>
     </footer>
+
+    <script src="/static/js/game-client.js"></script>
 </body>
 </html>

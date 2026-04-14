@@ -292,6 +292,132 @@ footer {
   padding: 24px 20px 30px;
 }
 
+.mutation-options {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 100%;
+}
+
+.mutation-card {
+  background: rgba(18, 39, 72, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  min-height: 80px;
+}
+
+.mutation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 8px 8px 0 0;
+}
+
+.mutation-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(77, 163, 255, 0.4);
+  background: rgba(18, 39, 72, 0.95);
+}
+
+.mutation-card.exodia::before { background: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
+.mutation-card.cible::before { background: linear-gradient(90deg, #67d39b, #8ae6b1); }
+.mutation-card.every::before { background: linear-gradient(90deg, #ffd93d, #ffe066); }
+.mutation-card.extreme::before { background: linear-gradient(90deg, #ff8c42, #ffa366); }
+.mutation-card.roulette::before { background: linear-gradient(90deg, #c77dff, #d4a5ff); }
+.mutation-card.empilement::before { background: linear-gradient(90deg, #74b9ff, #a29bfe); }
+
+.mutation-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.mutation-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  flex-shrink: 0;
+}
+
+.mutation-card.exodia .mutation-icon { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+.mutation-card.cible .mutation-icon { background: linear-gradient(135deg, #67d39b, #8ae6b1); }
+.mutation-card.every .mutation-icon { background: linear-gradient(135deg, #ffd93d, #ffe066); }
+.mutation-card.extreme .mutation-icon { background: linear-gradient(135deg, #ff8c42, #ffa366); }
+.mutation-card.roulette .mutation-icon { background: linear-gradient(135deg, #c77dff, #d4a5ff); }
+.mutation-card.empilement .mutation-icon { background: linear-gradient(135deg, #74b9ff, #a29bfe); }
+
+.mutation-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.mutation-description {
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mutation-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 11px;
+}
+
+.mutation-checkbox input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  margin: 0;
+}
+
+.mutation-checkbox input[type="checkbox"]:checked {
+  accent-color: var(--success);
+}
+
+/* Responsive pour les mutations */
+@media (max-width: 768px) {
+  .mutation-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mutation-options {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   nav ul {
     flex-wrap: wrap;
@@ -390,6 +516,182 @@ footer {
   grid-template-columns: 1fr 2fr;
   gap: 24px;
   margin-top: 28px;
+}
+
+/* Profile card styles */
+.profile-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 auto 16px;
+}
+
+.profile-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.btn-logout {
+  background: var(--danger);
+  width: 100%;
+}
+
+.btn-logout:hover {
+  background: #e74c3c;
+}
+
+/* Create section styles */
+.create-section {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.create-section h2 {
+  margin: 0 0 20px 0;
+  color: var(--text-main);
+}
+
+.create-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.create-row input {
+  flex: 1;
+  margin: 0;
+}
+
+.create-row input:first-child {
+  flex: 2;
+}
+
+#create-room-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-top: 16px;
+}
+
+.create-success {
+  color: var(--success);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  display: none;
+}
+
+.rooms-section {
+  margin-top: 32px;
+}
+
+.rooms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.refresh-btn {
+  background: var(--bg-soft);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.refresh-btn:hover {
+  background: var(--bg-card);
+}
+
+.room-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.room-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.room-info h3 {
+  margin: 0 0 4px 0;
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+
+.room-info p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.mutations {
+  margin-top: 4px !important;
+  font-size: 0.8rem !important;
+  color: var(--accent) !important;
+}
+
+.password-icon {
+  margin-left: 8px;
+}
+
+.room-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.join-btn {
+  min-width: 100px;
+}
+
+.delete-btn {
+  background: var(--danger);
+  min-width: 100px;
+}
+
+.delete-btn:hover {
+  background: #e74c3c;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
 }
 
 .profile-card,

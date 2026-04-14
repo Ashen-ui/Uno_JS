@@ -1,0 +1,1161 @@
+/* ===== UNO GAME PAGE STYLES ===== */
+
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Game Board - Main Container */
+.game-board {
+    background: linear-gradient(135deg, rgba(45, 143, 255, 0.15) 0%, rgba(110, 193, 255, 0.08) 100%);
+    border: 2px solid rgba(77, 163, 255, 0.3);
+    border-radius: 16px;
+    padding: 30px;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Top Players Row */
+.players-top {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    width: 100%;
+    min-height: 80px;
+    align-items: flex-start;
+}
+
+/* Left Players Column */
+.players-left {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 140px;
+}
+
+/* Right Players Column */
+.players-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 140px;
+}
+
+/* Player Card */
+.player-card {
+    width: 130px;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 2px solid rgba(77, 163, 255, 0.4);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.player-card.active {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    box-shadow: 0 0 15px rgba(77, 163, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.player-name {
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.player-hand-size {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Opponent Hand Display */
+.opponent-hand-display {
+    display: flex;
+    gap: 2px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 120px;
+}
+
+.opponent-card {
+    width: 25px;
+    height: 38px;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(77, 163, 255, 0.3);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Center Game Area */
+.game-center-area {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Cards */
+.card {
+    width: 100px;
+    height: 140px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(77, 163, 255, 0.3);
+}
+
+.card-back {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.card-display {
+    border: 3px solid rgba(77, 163, 255, 0.5);
+}
+
+.card-count {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 3px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+}
+
+.card-placeholder {
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Draw Button */
+.btn-draw {
+    padding: 8px 14px;
+    background: linear-gradient(135deg, var(--accent) 0%, #2196F3 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(77, 163, 255, 0.3);
+}
+
+.btn-draw:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(77, 163, 255, 0.4);
+}
+
+.btn-draw:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Action Buttons Top */
+.action-buttons-top {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    padding: 8px 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+}
+
+.uno-btn {
+    background: linear-gradient(135deg, var(--danger) 0%, #e74c3c 100%);
+    color: white;
+}
+
+.uno-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(224, 67, 67, 0.4);
+}
+
+.contra-btn {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+}
+
+.contra-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(155, 89, 182, 0.4);
+}
+
+.btn-action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Player Hand Section (Bottom) */
+.player-hand-bottom {
+    background: var(--bg-soft);
+    border: 2px solid rgba(77, 163, 255, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.hand-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(77, 163, 255, 0.2);
+}
+
+.hand-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--accent);
+}
+
+.hand-count {
+    color: var(--text-muted);
+    font-size: 12px;
+    background: rgba(77, 163, 255, 0.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.player-hand {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 110px;
+    align-items: center;
+    padding: 8px;
+}
+
+.hand-card {
+    width: 80px;
+    height: 115px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hand-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(77, 163, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.card-symbol,
+.card-value {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 24px;
+}
+
+/* Mutations Panel */
+.mutations-panel {
+    background: var(--bg-soft);
+    border: 1px solid rgba(77, 163, 255, 0.3);
+    border-radius: 10px;
+    padding: 12px 15px;
+    backdrop-filter: blur(10px);
+}
+
+.mutations-panel h4 {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mutations-list {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mutation-badge {
+    background: rgba(77, 163, 255, 0.2);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(77, 163, 255, 0.3);
+}
+
+.mutation-badge.active {
+    background: rgba(77, 163, 255, 0.3);
+    border-color: var(--accent);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .game-main {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .game-board {
+        padding: 20px;
+        aspect-ratio: auto;
+        min-height: 400px;
+    }
+
+    .game-center-area {
+        gap: 30px;
+    }
+
+    .card {
+        width: 85px;
+        height: 120px;
+        font-size: 16px;
+    }
+
+    .hand-card {
+        width: 70px;
+        height: 100px;
+        font-size: 14px;
+    }
+
+    .player-card {
+        width: 110px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-board {
+        padding: 15px;
+        min-height: 350px;
+    }
+
+    .game-center-area {
+        gap: 20px;
+    }
+
+    .players-top {
+        gap: 30px;
+    }
+
+    .players-left,
+    .players-right {
+        gap: 20px;
+    }
+
+    .card {
+        width: 75px;
+        height: 105px;
+        font-size: 14px;
+    }
+
+    .hand-card {
+        width: 65px;
+        height: 90px;
+        font-size: 12px;
+    }
+
+    .player-hand {
+        gap: 8px;
+        min-height: 100px;
+    }
+
+    .pile-section {
+        gap: 8px;
+    }
+
+    .btn-draw {
+        padding: 6px 12px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-main {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .game-board {
+        padding: 10px;
+        min-height: 300px;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .card {
+        width: 65px;
+        height: 90px;
+        font-size: 12px;
+    }
+
+    .hand-card {
+        width: 55px;
+        height: 80px;
+        font-size: 11px;
+    }
+
+    .game-center-area {
+        gap: 15px;
+    }
+
+    .players-left,
+    .players-right {
+        display: none;
+    }
+
+    .players-top {
+        gap: 20px;
+    }
+
+    .player-card {
+        width: 100px;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .action-buttons-top {
+        gap: 6px;
+    }
+
+    .btn-action {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+}
+/* ===== UNO GAME PAGE STYLES ===== */
+
+:root {
+    --uno-green: #1a5f3f;
+    --uno-light-green: #2a8a5e;
+    --uno-dark: #0d3b27;
+    --card-width: 120px;
+    --card-height: 170px;
+    --hand-card-width: 95px;
+    --hand-card-height: 135px;
+}
+
+.uno-game-page {
+    background: linear-gradient(135deg, var(--uno-green) 0%, var(--uno-light-green) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+.uno-header {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+}
+
+.uno-header .header-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.uno-logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-header-info {
+    flex: 1;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.game-header-info span {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-username {
+    color: white;
+    font-weight: 600;
+}
+
+.header-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.header-nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Main Game Container */
+.uno-game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Game State Bar - Not used anymore but keeping compatibility */
+.game-state-bar {
+    display: none;
+}
+
+/* Table Area */
+.uno-table-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 500px;
+}
+
+/* UNO Table */
+.uno-table {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 900px;
+    aspect-ratio: 4/3;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    border: 3px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Players Area */
+.players-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-card {
+    position: absolute;
+    width: 150px;
+    padding: 12px;
+    background: rgba(26, 95, 63, 0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.player-card.active {
+    border-color: #FFD700;
+    background: rgba(26, 95, 63, 0.95);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: scale(1.08);
+}
+
+.player-name {
+    font-weight: 700;
+    color: #FFD700;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.player-hand-size {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    display: block;
+}
+
+/* Opponent Hand Display */
+.opponent-hand-display {
+    display: flex;
+    gap: 2px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 130px;
+}
+
+.opponent-card {
+    width: 30px;
+    height: 44px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Game Center */
+.game-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.piles-container {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Pile Containers */
+.pile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.pile-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Draw Pile */
+.draw-pile-container .card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.draw-pile-container .card:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-draw {
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+    color: #1a5f3f;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-draw:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+.btn-draw:active {
+    transform: translateY(-1px);
+}
+
+.btn-draw:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Discard Pile */
+.discard-pile-container .card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Center Decoration */
+.center-decoration {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 3px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+/* Action Buttons Center */
+.action-buttons-center {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-action {
+    padding: 10px 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.uno-action-btn {
+    background: linear-gradient(135deg, #FF4444 0%, #FF0000 100%);
+    color: white;
+}
+
+.uno-action-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+}
+
+.contra-action-btn {
+    background: linear-gradient(135deg, #6B4CE6 0%, #5535C7 100%);
+    color: white;
+}
+
+.contra-action-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(107, 76, 230, 0.4);
+}
+
+.btn-action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Card Styles */
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-display {
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.card-count {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 4px 8px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFD700;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+}
+
+.card-placeholder {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+}
+
+/* Player Hand Section */
+.player-hand-section {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.hand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.hand-header h2 {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.hand-count {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.player-hand {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 12px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    max-height: 180px;
+}
+
+.player-hand::-webkit-scrollbar {
+    height: 6px;
+}
+
+.player-hand::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.player-hand::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.player-hand::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.hand-card {
+    width: var(--hand-card-width);
+    height: var(--hand-card-height);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.hand-card:hover {
+    transform: translateY(-12px) scale(1.08);
+    box-shadow: 0 12px 32px rgba(77, 163, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.hand-card:active {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.card-symbol,
+.card-value {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 28px;
+}
+
+.hand-hint {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Game Info Bar */
+.game-info-bar {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.mutations-info h4 {
+    color: white;
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.mutations-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mutation-badge {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mutation-badge.active {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+}
+
+/* Footer */
+.site-footer {
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .uno-game-container {
+        padding: 15px;
+    }
+
+    .uno-table-area {
+        min-height: 400px;
+    }
+
+    .uno-table {
+        max-width: 80%;
+    }
+
+    .piles-container {
+        gap: 40px;
+    }
+
+    .action-buttons-center {
+        gap: 8px;
+    }
+
+    .btn-action {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-header-info {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 13px;
+    }
+
+    .uno-table-area {
+        min-height: 350px;
+    }
+
+    .uno-table {
+        max-width: 90%;
+    }
+
+    .player-card {
+        width: 120px;
+        font-size: 11px;
+    }
+
+    .piles-container {
+        gap: 30px;
+    }
+
+    :root {
+        --card-width: 100px;
+        --card-height: 140px;
+        --hand-card-width: 80px;
+        --hand-card-height: 115px;
+    }
+
+    .player-hand {
+        gap: 8px;
+    }
+
+    .hand-card {
+        font-size: 14px;
+    }
+
+    .mutation-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .uno-header .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .game-header-info {
+        font-size: 12px;
+    }
+
+    .uno-logo {
+        font-size: 20px;
+    }
+
+    :root {
+        --card-width: 80px;
+        --card-height: 115px;
+        --hand-card-width: 70px;
+        --hand-card-height: 100px;
+    }
+
+    .player-hand {
+        gap: 6px;
+        max-height: 150px;
+    }
+
+    .piles-container {
+        gap: 20px;
+    }
+
+    .uno-table-area {
+        min-height: 280px;
+    }
+
+    .btn-action {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+}
+}

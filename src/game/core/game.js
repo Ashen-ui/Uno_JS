@@ -172,87 +172,27 @@ function Game(playerInfos) {
     }
 
     this.chooseColor = function() {
-        while (true) {
-            console.log("\nCouleur :")
-            CARD_COLORS.forEach(function(color, index) {console.log(`${index + 1}. ${color}`)})
-            const color = prompt("Choisissez une couleur : 1-4 : ")
-            if (color < 1 || color > 4) {
-                console.log("Choix invalide.")
-            }else {
-                return CARD_COLORS[parseInt(color) - 1]
-            }
-        }
+        // Web version: color selection will be handled by client UI
+        // Return first available color by default if needed
+        return CARD_COLORS[0];
     }
 
     this.chooseTargetPlayer = function(playerId) {
-        while (true) {
-            console.log("\nJoueurs :")
-            this.players.forEach(function(player, index) {console.log(`${index + 1}. ${player.pseudo}`)})
-            const targetIndex = parseInt(prompt("Choisissez un joueur : ")) - 1
-            if (targetIndex < 0 || targetIndex >= this.players.length) {
-                console.log("Choix invalide.")
-            } else if (targetIndex == playerId) {
-                console.log("Vous ne pouvez pas choisir vous-même.")
-            } else {
-                return this.players[targetIndex]
+        // Web version: target selection will be handled by client UI
+        // Return first other player by default if needed
+        for (let i = 0; i < this.players.length; i++) {
+            if (this.players[i].id !== playerId) {
+                return this.players[i];
             }
         }
+        return null;
     }
 
     this.chooseCardToPlay = function(player) {
-        console.log("\nMain :")
-        player.hand.forEach(function(card, index) {console.log(`${index + 1}. ${card.color} ${card.value}`)})
-
-        if (this.stackCount > 0 && (this.lastcard.value === "+2" || this.lastcard.value === "+4")) {
-            switch (this.lastcard.value) {
-                case "+2":
-                    console.log(`Vous devez jouer une carte +2 ou +4 pour empiler (${this.stackCount} cartes à piocher) ou piocher les cartes.`)
-                    break
-                case "+4":
-                    console.log(`Vous devez jouer une carte +4 pour empiler (${this.stackCount} cartes à piocher) ou piocher les cartes.`)
-                    break
-            }
-        }
-        while (true) {
-            let cardIndex = prompt("Choisissez une carte (d pour piocher): ")
-            if (cardIndex == "end") {
-                console.log("Fin du jeu.")
-                this.status = GAME_STATUS.ENDED
-                return
-            }
-            if (cardIndex == "") {
-                console.log("Vous n'avez pas choisi de carte.")
-            }else if (cardIndex == "d" || cardIndex == "D"  || (cardIndex >= 0 && cardIndex < player.hand.length)) {
-                if (cardIndex == "d" || cardIndex == "D" ) {
-                    console.log("\nVous avez choisi de piocher.")
-                    if (this.deck.cards.length == 0) {
-                        this.reDeck()
-                    }
-                    if (this.stackCount > 0) {
-                        console.log(`Vous devez piocher ${this.stackCount} cartes.`)
-                        for (let i = 0; i < this.stackCount; i++) {player.draw(this.deck)}
-                    }else {
-                        player.draw(this.deck)
-                    }
-                    this.nextPlayer()
-                    return 
-                }
-                cardIndex = parseInt(cardIndex) - 1
-                if ((cardIndex < 0 || cardIndex > player.hand.length)) {
-                    console.log("Choix invalide.")
-                }else {
-                    if (!this.isPlayable(player.hand[cardIndex])) {
-                        console.log("Carte non jouable.")
-                    }else {
-                        this.playCard(player, player.hand[cardIndex])
-                        player.hand.splice(cardIndex, 1)
-                        return
-                    }
-                }
-            }else {
-                console.log("Character invalide")
-            }
-        }
+        // Web version: card selection will be handled by client UI
+        // This function is kept for interface compatibility but should not be called in web version
+        // The client will send API requests to play cards instead
+        return;
     }
 
     this.reDeck = function() {
@@ -261,7 +201,10 @@ function Game(playerInfos) {
         this.discardPile = []
         console.log("la défause a étai mélanger et est redevenu la pioche")
     }
-// test de l'affichage d'une carte
+    
+    // Commented out: displayCard is not used in web version
+    // Cards are rendered via HTML/CSS on the client side
+    /*
     function displayCard(color, value, faceUp) {
         const imageUrl = `/static/Images/UNO_${color}/${value}_${color}.png`;
         const image_back = "/static/Images/UNO_Other/Verso_Other.png";
@@ -275,36 +218,14 @@ function Game(playerInfos) {
         img.style.objectFit = "contain";
 
         document.getElementById("cards").appendChild(img);
-
-        // TEST : affiche quelques cartes
-        displayCard("red", "5", true);
-        displayCard("yellow", "reverse", false);
-        displayCard("blue", "+2", true);
-        displayCard("green", "0", false);
-        displayCard("wild", "wild", true);
-        displayCard("Other", "Verso", false);
     }
+    */
 
     this.SelectMutations = function() {
-        while (true) {
-            console.log("Available Mutations:")
-            let x = 0
-            for (const mutation in ADDRULES) {
-                console.log(`${x} - ${mutation}`)
-                 x ++
-            }
-            const selected = prompt("Select mutations (separer pas une virgule):")
-            const IndexselectedMutations = selected.split(",").map(s => s.trim())
-            if (IndexselectedMutations.every(index => index >= 0 && index < Object.keys(ADDRULES).length)) {
-                IndexselectedMutations.forEach(index => {
-                    const mutationName = Object.keys(ADDRULES)[index]
-                    this.mutations[mutationName] = true
-                })
-                break
-            }else {
-                console.log("Invalid selection, please try again.")
-            }
-        }
+        // Web version: mutations are already selected when lobby is created
+        // This function is kept for compatibility but does nothing
+        // Mutations are applied in server.js before game initialization
+        return;
     }
 }
 

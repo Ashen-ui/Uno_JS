@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobby – UNO WEB</title>
+    <title>Lobby - UNO WEB</title>
     <link rel="stylesheet" href="/static/Images/style.css">
 </head>
 <body class="page">
@@ -27,7 +27,7 @@
                     <div id="avatar-container">
                         <div class="profile-avatar-placeholder" id="avatar-placeholder">?</div>
                     </div>
-                    <div class="profile-name" id="profile-name">Chargement...</div>
+                    <div class="profile-name" id="profile-name">Client</div>
                     <div class="profile-email" id="profile-email"></div>
                     <button class="btn-logout" onclick="window.location.href='/'">Se déconnecter</button>
                 </div>
@@ -36,13 +36,87 @@
             <!-- Colonne droite : salles -->
             <main>
                 <!-- Créer une salle -->
+                <!-- Ajout d'option tel que le nombre de joueurs ou les modificateur voulus  -->
                 <div class="create-section">
                     <h2>Créer une partie</h2>
                     <div class="create-row">
                         <input type="text" id="room-name-input" placeholder="Nom de la salle..." maxlength="30">
-                        <button onclick="createRoom()">Créer</button>
+                        <input type="number" id="max-players-input" placeholder="Joueurs max" min="2" max="8" value="4">
                     </div>
+                    <div class="create-row">
+                        <input type="password" id="room-password-input" placeholder="Mot de passe (optionnel)" maxlength="20">
+                    </div>
+                    <h3 style="margin: 15px 0 8px 0; color: var(--text-main); font-size: 14px; font-weight: 600;">Modificateurs de jeu</h3>
+                    <div id="mutation-options" class="mutation-options">
+                        <div class="mutation-card exodia">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">⚔️</div>
+                                <h3 class="mutation-title">Exodia</h3>
+                            </div>
+                            <p class="mutation-description">4 cartes Exodia gagnent la partie</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Exodia"> Activer
+                            </label>
+                        </div>
+
+                        <div class="mutation-card cible">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">🎯</div>
+                                <h3 class="mutation-title">Cible</h3>
+                            </div>
+                            <p class="mutation-description">+2/+4 ciblé sur un joueur</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Cible"> Activer
+                            </label>
+                        </div>
+
+                        <div class="mutation-card every">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">👥</div>
+                                <h3 class="mutation-title">Tout le monde</h3>
+                            </div>
+                            <p class="mutation-description">Tous piochent 2 cartes sauf vous</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Everyone_draw"> Activer
+                            </label>
+                        </div>
+
+                        <div class="mutation-card extreme">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">🔥</div>
+                                <h3 class="mutation-title">Extreme</h3>
+                            </div>
+                            <p class="mutation-description">Cartes UNO Extreme incluses</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Extreme"> Activer
+                            </label>
+                        </div>
+
+                        <div class="mutation-card roulette">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">🎰</div>
+                                <h3 class="mutation-title">Roulette</h3>
+                            </div>
+                            <p class="mutation-description">Pioche jusqu'à couleur choisie</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Roulette"> Activer
+                            </label>
+                        </div>
+
+                        <div class="mutation-card empilement">
+                            <div class="mutation-header">
+                                <div class="mutation-icon">📚</div>
+                                <h3 class="mutation-title">Empilement</h3>
+                            </div>
+                            <p class="mutation-description">Pose toutes cartes même couleur</p>
+                            <label class="mutation-checkbox">
+                                <input type="checkbox" value="Stacking"> Activer
+                            </label>
+                        </div>
+                    </div>
+                    <button id="create-room-button" type="button" onclick="">Créer</button>
                     <div id="create-error" class="create-error"></div>
+                    <div id="create-success" class="create-success"></div>
                 </div>
 
                 <!-- Liste des salles -->
@@ -65,118 +139,6 @@
     <footer class="site-footer">
         <p>&copy; 2026 UNO WEB. All rights reserved.</p>
     </footer>
-
-    <script>
-        // Charger le profil utilisateur
-        async function loadProfile() {
-            // const res = await fetch('/api/me')
-            // if (!res.ok) { window.location.href = '/connexion'; return }
-            const user = await res.json()
-
-            document.getElementById('profile-name').textContent = user.name
-            document.getElementById('profile-email').textContent = user.email || ''
-            document.getElementById('header-username').textContent = user.name
-
-            if (user.avatar) {
-                const container = document.getElementById('avatar-container')
-                container.innerHTML = `<img class="profile-avatar" src="${user.avatar}" alt="${user.name}">`
-            } else {
-                document.getElementById('avatar-placeholder').textContent = user.name.charAt(0).toUpperCase()
-            }
-        }
-
-        // Charger les salles
-        async function loadRooms() {
-            const res = await fetch('/api/rooms')
-            const rooms = await res.json()
-            const container = document.getElementById('rooms-list')
-
-            if (rooms.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <p>Aucune salle disponible. Sois le premier à créer une partie !</p>
-                    </div>`
-                return
-            }
-
-            container.innerHTML = rooms.map(room => {
-                const isFull = room.players.length >= room.maxPlayers
-                return `
-                <div class="room-item">
-                    <div class="room-info">
-                        <h3>${escapeHtml(room.name)}</h3>
-                        <div class="room-meta">
-                            <span>Hôte : ${escapeHtml(room.host)}</span>
-                            <span class="players-count"> ${room.players.length}/${room.maxPlayers}</span>
-                            <span class="badge ${isFull ? 'badge-full' : 'badge-waiting'}">
-                                ${isFull ? 'Pleine' : 'En attente'}
-                            </span>
-                        </div>
-                    </div>
-                    <button class="btn btn-join" ${isFull ? 'disabled' : ''} onclick="joinRoom('${room.id}')">
-                        ${isFull ? 'Pleine' : 'Rejoindre'}
-                    </button>
-                </div>`
-            }).join('')
-        }
-
-        // Créer une salle
-        async function createRoom() {
-            const input = document.getElementById('room-name-input')
-            const errorEl = document.getElementById('create-error')
-            const name = input.value.trim()
-
-            errorEl.style.display = 'none'
-
-            if (!name) {
-                errorEl.textContent = 'Donne un nom à ta salle.'
-                errorEl.style.display = 'block'
-                return
-            }
-
-            const res = await fetch('/api/rooms', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            })
-
-            if (!res.ok) {
-                const err = await res.json()
-                errorEl.textContent = err.error
-                errorEl.style.display = 'block'
-                return
-            }
-
-            input.value = ''
-            loadRooms()
-        }
-
-        // Rejoindre une salle
-        async function joinRoom(id) {
-            const res = await fetch(`/api/rooms/${id}/join`, { method: 'POST' })
-            if (res.ok) {
-                window.location.href = '/game'
-            } else {
-                const err = await res.json()
-                alert(err.error)
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-        }
-
-        // Entrée clavier pour créer
-        document.getElementById('room-name-input').addEventListener('keydown', e => {
-            if (e.key === 'Enter') createRoom()
-        })
-
-        // Init
-        loadProfile()
-        loadRooms()
-
-        // Actualisation auto toutes les 10s
-        setInterval(loadRooms, 10000)
-    </script>
+    <script src="/static/js/lobby-client.js" defer></script>
 </body>
 </html>

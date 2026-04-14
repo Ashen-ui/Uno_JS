@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partie - UNO WEB</title>
+    <link rel="stylesheet" href="/static/Images/style.css">
+    
+</head>
+<body class="page" onload="Game = new Game(); Game.initGame();">
+    <header class="site-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <a href="/" class="brand-title">UNO WEB</a>
+            </div>
+            <nav class="header-nav">
+                <span id="header-username" class="header-username"></span>
+                <a href="/lobby">Lobby</a>
+                <a href="/">Se deconnecter</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="game-Waiting-board">
+            <div class="waiting-player">
+                <h2>En attente de joueurs...</h2>
+                <p>Partie ID: <strong id="game-id">-</strong></p>
+                <p>Joueurs connectés: <strong id="connected-players">0</strong></p>
+                <p>En attente de 2 joueurs pour commencer la partie.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 UNO WEB.</p>
+    </footer>
+    <script src="/static/js/gameWait-client.js"></script>
+</body>
+</html>

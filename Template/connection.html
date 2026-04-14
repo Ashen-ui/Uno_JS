@@ -23,6 +23,8 @@
         <div class="page-header">
             <h1>Connexion</h1>
 
+            <div id="login-error" class="error-message" style="display: none;"></div>
+
             <a href="/auth/google" class="google-btn">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
                 Se connecter avec Google
@@ -30,7 +32,7 @@
 
             <div class="separator">ou</div>
 
-            <form action="/connection" method="get">
+            <form>
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Mot de passe</label>
@@ -42,5 +44,6 @@
     <footer class="site-footer">
         <p>&copy; 2026 UNO WEB. All rights reserved.</p>
     </footer>
+    <script src="/static/js/auth.js"></script>
 </body>
 </html>
