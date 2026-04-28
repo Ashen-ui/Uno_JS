@@ -1,40 +1,20 @@
 [
   {
-    "id": "user_1776154636957_wsip1es75",
-    "username": "mathis",
-    "email": "matislangella@gmail.com",
-    "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    "created_at": "2026-04-14T08:17:16.958Z",
-    "games_played": 0,
-    "games_won": 0,
-    "level": 1
-  },
-  {
-    "id": "user_1776155908079_0sxci18we",
-    "username": "flo",
-    "email": "flo@gmail.com",
-    "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    "created_at": "2026-04-14T08:38:28.080Z",
-    "games_played": 0,
-    "games_won": 0,
-    "level": 1
-  },
-  {
-    "id": "user_1776155960913_u5bpkbjmy",
-    "username": "J3",
-    "email": "j3@gmail.com",
-    "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    "created_at": "2026-04-14T08:39:20.913Z",
-    "games_played": 0,
-    "games_won": 0,
-    "level": 1
-  },
-  {
     "id": "user_1776155995264_tgdfs2m4p",
     "username": "J4",
     "email": "j4@gmail.com",
     "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
     "created_at": "2026-04-14T08:39:55.264Z",
+    "games_played": 0,
+    "games_won": 0,
+    "level": 1
+  },
+  {
+    "id": "user_1777364874840_32ipirll9",
+    "username": "1",
+    "email": "1@gmail.com",
+    "password_hash": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+    "created_at": "2026-04-28T08:27:54.842Z",
     "games_played": 0,
     "games_won": 0,
     "level": 1
