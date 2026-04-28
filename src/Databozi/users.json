@@ -18,5 +18,15 @@
     "games_played": 0,
     "games_won": 0,
     "level": 1
+  },
+  {
+    "id": "user_1777362574909_mxe7h5wgp",
+    "username": "2",
+    "email": "2@gmail.com",
+    "password_hash": "4cc8f4d609b717356701c57a03e737e5ac8fe885da8c7163d3de47e01849c635",
+    "created_at": "2026-04-28T07:49:34.909Z",
+    "games_played": 0,
+    "games_won": 0,
+    "level": 1
   }
 ]

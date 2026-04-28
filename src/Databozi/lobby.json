@@ -4,25 +4,18 @@
     "maxPlayers": 2,
     "players": [
       {
-        "id": "user_1776155960913_u5bpkbjmy",
-        "pseudo": "J3"
+        "id": "user_1777364874840_32ipirll9",
+        "pseudo": "1"
       },
       {
-        "id": "user_1776155995264_tgdfs2m4p",
-        "pseudo": "J4"
+        "id": "user_1777362574909_mxe7h5wgp",
+        "pseudo": "2"
       }
     ],
     "password": null,
-    "mutations": [
-      "Exodia",
-      "Cible",
-      "Everyone_draw",
-      "Extreme",
-      "Roulette",
-      "Stacking"
-    ],
+    "mutations": [],
     "status": "playing",
-    "createdAt": "2026-04-14T10:09:10.659Z",
-    "creatorId": "user_1776155960913_u5bpkbjmy"
+    "createdAt": "2026-04-28T07:48:36.832Z",
+    "creatorId": "user_1777364874840_32ipirll9"
   }
 ]
