@@ -1,4 +1,5 @@
 const { CARD_COLORS, NUMBER_CARDS, SPECIAL_CARDS, WILD_CARDS , ADDRULES} = require("./types")
+const Card = require("./card")
 
 function Deck(cards = [],bonusCards = [],Mutations = {}) {
     this.cards = cards 
@@ -33,7 +34,7 @@ function Deck(cards = [],bonusCards = [],Mutations = {}) {
                     continue
                 } else {
                     this.addCard(color, value)
-                    if (value !== 0) this.addCard(color, value)
+                    if (value !== "0") this.addCard(color, value)
                 }
             }
             for (const value of SPECIAL_CARDS) {
@@ -48,7 +49,7 @@ function Deck(cards = [],bonusCards = [],Mutations = {}) {
     }
 
     this.addCard = function(color, value) {
-        this.cards.push({ color, value , skin: `../../../static/Images/UNO_${color}/${value} ${color}.png` , skin_back: "../../../static/Images/UNO_Other/Verso_Other.png"   })
+        this.cards.push(new Card(color, value))
     }
 
     this.draw = function() {
